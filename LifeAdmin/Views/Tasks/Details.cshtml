@@ -1,0 +1,18 @@
+﻿@model LifeAdminModels.Models.TaskItem
+@{
+    ViewData["Title"] = "Task Details";
+}
+
+<h2>Task Details</h2>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title</h5>
+        <h6 class="card-subtitle mb-2 text-muted">@Model.Category.Name • @Model.Status</h6>
+        <p class="card-text">@Model.Description</p>
+
+        <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+        <a class="btn btn-secondary" asp-action="All">Back</a>
+    </div>
+</div>
