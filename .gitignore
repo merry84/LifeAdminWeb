@@ -21,3 +21,5 @@ obj/
 Thumbs.db
 
 appsettings.Development.json
+**/appsettings.Development.json
+
