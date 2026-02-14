@@ -20,7 +20,7 @@ namespace LifeAdmin.Web.Controllers
 
             var model = list
                 .OrderBy(c => c.Name)
-                .Select(c => new CategoryFormViewModel
+                .Select(c => new CategoryListViewModel
                 {
                     Id = c.Id,
                     Name = c.Name

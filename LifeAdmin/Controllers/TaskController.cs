@@ -1,11 +1,9 @@
-﻿using System.Security.Claims;
-using LifeAdminModels.Models;
+﻿using LifeAdminModels.Models;
 using LifeAdminServices.Contracts;
-
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ViewModels;
-
 
 namespace LifeAdmin.Web.Controllers
 {
@@ -14,27 +12,35 @@ namespace LifeAdmin.Web.Controllers
     {
         private readonly ITaskService tasks;
         private readonly ICategoryService categories;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public TasksController(ITaskService tasks, ICategoryService categories)
+        public TasksController(
+            ITaskService tasks,
+            ICategoryService categories,
+            UserManager<ApplicationUser> userManager)
         {
             this.tasks = tasks;
             this.categories = categories;
+            this.userManager = userManager;
         }
 
-        private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+        private string UserId => userManager.GetUserId(User)!;
 
+        [HttpGet]
         public async Task<IActionResult> All()
         {
             var mine = await tasks.GetMineAsync(UserId);
 
-            var model = mine.Select(t => new TaskListViewModel
-            {
-                Id = t.Id,
-                Title = t.Title,
-                CategoryName = t.Category.Name,
-                Status = t.Status,
-                CreatedOn = t.CreatedOn
-            });
+            var model = mine
+                .Select(t => new TaskListViewModel
+                {
+                    Id = t.Id,
+                    Title = t.Title,
+                    CategoryName = t.Category.Name,
+                    Status = t.Status,
+                    CreatedOn = t.CreatedOn
+                })
+                .ToList();
 
             return View(model);
         }
@@ -47,10 +53,12 @@ namespace LifeAdmin.Web.Controllers
                 Categories = await categories.GetAllForSelectAsync(),
                 Status = WorkStatus.Planned
             };
+
             return View(vm);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TaskFormViewModel vm)
         {
             if (!await categories.ExistsAsync(vm.CategoryId))
@@ -68,7 +76,8 @@ namespace LifeAdmin.Web.Controllers
                 Description = vm.Description,
                 CategoryId = vm.CategoryId,
                 Status = vm.Status,
-                OwnerId = UserId
+                OwnerId = UserId,
+                CreatedOn = DateTime.UtcNow
             };
 
             await tasks.AddAsync(entity);
@@ -81,7 +90,17 @@ namespace LifeAdmin.Web.Controllers
             var task = await tasks.GetByIdOwnedAsync(id, UserId);
             if (task is null) return NotFound();
 
-            return View(task);
+            var vm = new TaskDetailsViewModel
+            {
+                Id = task.Id,
+                Title = task.Title,
+                Description = task.Description,
+                CategoryName = task.Category.Name,
+                Status = task.Status,
+                CreatedOn = task.CreatedOn
+            };
+
+            return View(vm);
         }
 
         [HttpGet]
@@ -104,6 +123,7 @@ namespace LifeAdmin.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(TaskFormViewModel vm)
         {
             var task = await tasks.GetByIdOwnedAsync(vm.Id, UserId);
@@ -126,18 +146,27 @@ namespace LifeAdmin.Web.Controllers
             await tasks.UpdateAsync(task);
             return RedirectToAction(nameof(All));
         }
-
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var task = await tasks.GetByIdOwnedAsync(id, UserId);
             if (task is null) return NotFound();
 
-            return View(task);
+            var vm = new TaskDeleteViewModel
+            {
+                Id = task.Id,
+                Title = task.Title,
+                CategoryName = task.Category.Name,
+                Status = task.Status
+            };
+
+            return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeletePost(int id)
         {
             var task = await tasks.GetByIdOwnedAsync(id, UserId);
             if (task is null) return NotFound();
@@ -145,5 +174,6 @@ namespace LifeAdmin.Web.Controllers
             await tasks.DeleteAsync(task);
             return RedirectToAction(nameof(All));
         }
+
     }
 }

@@ -1,16 +1,30 @@
-﻿@model LifeAdminModels.Models.TaskItem
+﻿@model ViewModels.TaskDeleteViewModel
+
 @{
     ViewData["Title"] = "Delete Task";
 }
 
-<h2>Delete Task</h2>
+<h2>@ViewData["Title"]</h2>
 
 <div class="alert alert-warning mt-3">
     Are you sure you want to delete: <strong>@Model.Title</strong>?
 </div>
 
-<form method="post" asp-action="DeleteConfirmed">
+<ul class="list-group mb-3">
+    <li class="list-group-item d-flex justify-content-between">
+        <span>Category</span>
+        <span>@Model.CategoryName</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between">
+        <span>Status</span>
+        <span>@Model.Status</span>
+    </li>
+</ul>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
     <input type="hidden" name="id" value="@Model.Id" />
     <button type="submit" class="btn btn-danger">Yes, delete</button>
     <a class="btn btn-secondary" asp-action="All">Cancel</a>
 </form>
+
