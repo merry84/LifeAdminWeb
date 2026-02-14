@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<ViewModels.TaskListViewModel>
 
-
-
 @{
     ViewData["Title"] = "My Tasks";
 }
@@ -11,6 +9,13 @@
     <a class="btn btn-primary" asp-action="Create">+ Create</a>
 </div>
 
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        You don’t have any tasks yet.
+    </div>
+}
+else{
 <table class="table table-striped">
     <thead>
         <tr>
@@ -38,3 +43,4 @@
         }
     </tbody>
 </table>
+}

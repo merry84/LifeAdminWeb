@@ -1,8 +1,9 @@
 using System.Diagnostics;
-using LifeAdmin.Models;
 using Microsoft.AspNetCore.Mvc;
+using ViewModels;
 
-namespace LifeAdmin.Controllers
+
+namespace LifeAdmin.Web.Controllers
 {
     public class HomeController : Controller
     {

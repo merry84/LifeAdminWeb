@@ -1,4 +1,4 @@
-namespace LifeAdmin.Models
+namespace ViewModels
 {
     public class ErrorViewModel
     {

@@ -2,6 +2,7 @@
 using LifeAdminServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ViewModels;
 
 namespace LifeAdmin.Web.Controllers
 {
@@ -9,40 +10,60 @@ namespace LifeAdmin.Web.Controllers
     public class CategoriesController : Controller
     {
         private readonly ICategoryService categories;
-        public CategoriesController(ICategoryService categories) => this.categories = categories;
+
+        public CategoriesController(ICategoryService categories)
+            => this.categories = categories;
 
         public async Task<IActionResult> All()
-            => View(await categories.GetAllAsync());
+        {
+            var list = await categories.GetAllAsync();
+
+            var model = list
+                .OrderBy(c => c.Name)
+                .Select(c => new CategoryFormViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                });
+
+            return View(model);
+        }
 
         [HttpGet]
-        public IActionResult Create() => View(new Category());
+        public IActionResult Create()
+            => View(new CategoryFormViewModel());
 
         [HttpPost]
-        public async Task<IActionResult> Create(Category model)
+        public async Task<IActionResult> Create(CategoryFormViewModel vm)
         {
-            if (!ModelState.IsValid) return View(model);
-            await categories.AddAsync(model);
+            if (!ModelState.IsValid) return View(vm);
+
+            var entity = new Category { Name = vm.Name.Trim() };
+            await categories.AddAsync(entity);
+
             return RedirectToAction(nameof(All));
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var cat = await categories.GetByIdAsync(id);
-            if (cat is null) return NotFound();
-            return View(cat);
+            var c = await categories.GetByIdAsync(id);
+            if (c is null) return NotFound();
+
+            var vm = new CategoryFormViewModel { Id = c.Id, Name = c.Name };
+            return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Category model)
+        public async Task<IActionResult> Edit(CategoryFormViewModel vm)
         {
-            if (!ModelState.IsValid) return View(model);
+            var c = await categories.GetByIdAsync(vm.Id);
+            if (c is null) return NotFound();
 
-            var cat = await categories.GetByIdAsync(model.Id);
-            if (cat is null) return NotFound();
+            if (!ModelState.IsValid) return View(vm);
 
-            cat.Name = model.Name;
-            await categories.UpdateAsync(cat);
+            c.Name = vm.Name.Trim();
+            await categories.UpdateAsync(c);
 
             return RedirectToAction(nameof(All));
         }
@@ -50,18 +71,20 @@ namespace LifeAdmin.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var cat = await categories.GetByIdAsync(id);
-            if (cat is null) return NotFound();
-            return View(cat);
+            var c = await categories.GetByIdAsync(id);
+            if (c is null) return NotFound();
+
+            var vm = new CategoryFormViewModel { Id = c.Id, Name = c.Name };
+            return View(vm);
         }
 
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cat = await categories.GetByIdAsync(id);
-            if (cat is null) return NotFound();
+            var c = await categories.GetByIdAsync(id);
+            if (c is null) return NotFound();
 
-            await categories.DeleteAsync(cat);
+            await categories.DeleteAsync(c);
             return RedirectToAction(nameof(All));
         }
     }

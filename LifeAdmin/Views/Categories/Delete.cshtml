@@ -1,5 +1,4 @@
-﻿@model LifeAdminModels.Models.Category
-
+﻿@model CategoryFormViewModel
 @{
     ViewData["Title"] = "Delete Category";
 }
@@ -11,8 +10,7 @@
 </div>
 
 <form method="post" asp-action="DeleteConfirmed">
-    <input type="hidden" name="id" value="@Model.Id" />
-
+    <input type="hidden" asp-for="Id" />
     <button type="submit" class="btn btn-danger">Yes, delete</button>
     <a class="btn btn-secondary" asp-action="All">Cancel</a>
 </form>

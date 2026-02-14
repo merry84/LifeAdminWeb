@@ -9,5 +9,6 @@ namespace LifeAdminServices.Contracts
         Task AddAsync(TaskItem task);
         Task UpdateAsync(TaskItem task);
         Task DeleteAsync(TaskItem task);
+        Task<bool> ExistsOwnedAsync(int id, string userId);
     }
 }

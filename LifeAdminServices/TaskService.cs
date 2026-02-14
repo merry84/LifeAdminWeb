@@ -3,9 +3,6 @@ using LifeAdminModels.Models;
 using LifeAdminServices.Contracts;
 using Microsoft.EntityFrameworkCore;
 
-
-
-
 namespace LifeAdminServices
 {
     public class TaskService : ITaskService
@@ -42,7 +39,11 @@ namespace LifeAdminServices
             db.TaskItems.Remove(task);
             await db.SaveChangesAsync();
         }
+        public async Task<bool> ExistsOwnedAsync(int id, string userId)
+             => await db.TaskItems
+            .AnyAsync(t => t.Id == id && t.OwnerId == userId);
 
-        
+
+
     }
 }
