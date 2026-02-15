@@ -1,5 +1,6 @@
-using System.Diagnostics;
+﻿using LifeAdmin.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using ViewModels;
 
 
@@ -16,6 +17,7 @@ namespace LifeAdmin.Web.Controllers
 
         public IActionResult Index()
         {
+            TempData.SetSuccess("Toast test ✅");
             return View();
         }
 
