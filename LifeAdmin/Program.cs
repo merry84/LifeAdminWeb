@@ -20,10 +20,14 @@ builder.Services
 
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ILayoutService, LayoutService>();
+
 
 var app = builder.Build();
 
