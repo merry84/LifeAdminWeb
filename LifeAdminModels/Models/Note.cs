@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using static LifeAdminModels.GCommons.DataConstants.Note;
 namespace LifeAdminModels.Models
 {
     public class Note
     {
         public int Id { get; set; }
 
-        [Required, MaxLength(200)]
+        [Required, MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
 
-        [Required, MaxLength(2000)]
+        [Required, MaxLength(ContentMaxLength)]
         public string Content { get; set; } = null!;
 
         [Required]

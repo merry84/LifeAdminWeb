@@ -4,6 +4,9 @@ namespace LifeAdminServices.Contracts
 {
     public interface ITaskService
     {
+        Task<IEnumerable<TaskItem>> GetAllAsync();
+        Task<TaskItem?> GetByIdAsync(int id);
+
         Task<IEnumerable<TaskItem>> GetMineAsync(string userId);
         Task<TaskItem?> GetByIdOwnedAsync(int id, string userId);
         Task AddAsync(TaskItem task);

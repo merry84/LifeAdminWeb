@@ -1,5 +1,6 @@
 ﻿using LifeAdminModels.Models;
 using LifeAdminServices.Contracts;
+using LifeAdmin.Web.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,8 @@ namespace LifeAdmin.Web.Controllers
         private readonly ITaskService tasks;
         private readonly ICategoryService categories;
         private readonly UserManager<ApplicationUser> userManager;
+        private bool IsAdmin => User.IsInRole("Admin");
+
 
         public TasksController(
             ITaskService tasks,
@@ -25,6 +28,37 @@ namespace LifeAdmin.Web.Controllers
         }
 
         private string UserId => userManager.GetUserId(User)!;
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> AllUsers()
+        {
+            var all = await tasks.GetAllAsync();
+                        
+            var users = userManager.Users
+                .Select(u => new { u.Id, u.Email, u.UserName })
+                .ToList()
+                .ToDictionary(u => u.Id, u => u);
+
+            var model = all.Select(t =>
+            {
+                users.TryGetValue(t.OwnerId, out var u);
+
+                return new TaskListViewModel
+                {
+                    Id = t.Id,
+                    Title = t.Title,
+                    CategoryName = t.Category.Name,
+                    Status = t.Status,
+                    CreatedOn = t.CreatedOn,
+                    OwnerEmail = u?.Email,
+                    OwnerUserName = u?.UserName
+                };
+            });
+
+            return View(model);
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> All()
@@ -87,7 +121,10 @@ namespace LifeAdmin.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var task = await tasks.GetByIdOwnedAsync(id, UserId);
+            var task = IsAdmin
+            ? await tasks.GetByIdAsync(id)
+            : await tasks.GetByIdOwnedAsync(id, UserId);
+            
             if (task is null) return NotFound();
 
             var vm = new TaskDetailsViewModel
@@ -106,8 +143,11 @@ namespace LifeAdmin.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var task = await tasks.GetByIdOwnedAsync(id, UserId);
+            var task = IsAdmin
+            ? await tasks.GetByIdAsync(id)
+            : await tasks.GetByIdOwnedAsync(id, UserId);
             if (task is null) return NotFound();
+           
 
             var vm = new TaskFormViewModel
             {
@@ -149,7 +189,10 @@ namespace LifeAdmin.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var task = await tasks.GetByIdOwnedAsync(id, UserId);
+            var task = IsAdmin
+             ? await tasks.GetByIdAsync(id)
+             : await tasks.GetByIdOwnedAsync(id, UserId);
+
             if (task is null) return NotFound();
 
             var vm = new TaskDeleteViewModel

@@ -10,6 +10,21 @@ namespace LifeAdminServices
         private readonly ApplicationDbContext db;
         public TaskService(ApplicationDbContext db) => this.db = db;
 
+        public async Task<IEnumerable<TaskItem>> GetAllAsync()
+            => await db.TaskItems
+                .Include(t => t.Category)
+                .Include(t => t.Owner) 
+                .OrderByDescending(t => t.CreatedOn)
+                .ToListAsync();
+
+        public Task<TaskItem?> GetByIdAsync(int id)
+            => db.TaskItems
+                .Include(t => t.Category)
+                .Include(t => t.Owner)
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+
+
         public async Task<IEnumerable<TaskItem>> GetMineAsync(string userId)
             => await db.TaskItems
                 .Where(t => t.OwnerId == userId)

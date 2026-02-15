@@ -3,7 +3,9 @@ using LifeAdminModels.Models;
 using Microsoft.AspNetCore.Identity;
 using LifeAdminServices.Contracts;
 using LifeAdminServices;
+using LifeAdmin.Web.Infrastructure;
 
+    
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,7 @@ builder.Services
     {
         options.SignIn.RequireConfirmedAccount = false;
     })
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
@@ -44,5 +47,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
+await SeedData.SeedAdminAsync(app.Services, app.Configuration);
 
 app.Run();

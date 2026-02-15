@@ -1,17 +1,19 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using LifeAdminModels.Models;
+
+using static LifeAdminModels.GCommons.DataConstants.TaskFormViewModel;
+using static LifeAdminModels.GCommons.ValidationMessages;
 namespace ViewModels
 {
     public class TaskFormViewModel
     {
         public int Id { get; set; }
 
-        [Required, MaxLength(80)]
+        [Required, MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
 
-        [MaxLength(500)]
+        [MaxLength(DescriptionMaxLength)]
         public string? Description { get; set; }
 
         [Display(Name = "Category")]

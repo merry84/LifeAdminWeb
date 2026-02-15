@@ -11,5 +11,8 @@ namespace ViewModels
         public WorkStatus Status { get; set; }
 
         public DateTime CreatedOn { get; set; }
+        public string? OwnerUserName { get; set; }
+        public string? OwnerEmail { get; set; }
+
     }
 }

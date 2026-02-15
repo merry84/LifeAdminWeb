@@ -1,4 +1,5 @@
-﻿using LifeAdminModels.Models;
+﻿using LifeAdmin.Web.Infrastructure;
+using LifeAdminModels.Models;
 using LifeAdminServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using ViewModels;
 
 namespace LifeAdmin.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class CategoriesController : Controller
     {
         private readonly ICategoryService categories;
@@ -14,6 +15,7 @@ namespace LifeAdmin.Web.Controllers
         public CategoriesController(ICategoryService categories)
             => this.categories = categories;
 
+        
         public async Task<IActionResult> All()
         {
             var list = await categories.GetAllAsync();

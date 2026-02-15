@@ -1,6 +1,24 @@
 ﻿@using ViewModels
 @model TaskFormViewModel
+@using LifeAdminModels.Models
+@using Microsoft.AspNetCore.Mvc.Rendering
+@functions {
+    string StatusBadgeClass(WorkStatus status) => status switch
+    {
+        WorkStatus.Planned => "bg-secondary",
+        WorkStatus.InProgress => "bg-primary",
+        WorkStatus.Done => "bg-success",
+        _ => "bg-dark"
+    };
 
+    string StatusText(WorkStatus status) => status switch
+    {
+        WorkStatus.Planned => "Planned",
+        WorkStatus.InProgress => "In Progress",
+        WorkStatus.Done => "Done",
+        _ => status.ToString()
+    };
+}
 <form method="post" class="mt-3">
     @if (Model.Id != 0)
     {
@@ -29,7 +47,9 @@
 
     <div class="mb-3">
         <label asp-for="Status" class="form-label"></label>
-        <select asp-for="Status" class="form-select" asp-items="Html.GetEnumSelectList<TaskStatus>()"></select>
+        <select asp-for="Status" class="form-select"
+                asp-items="Html.GetEnumSelectList<WorkStatus>()">
+        </select>
         <span asp-validation-for="Status" class="text-danger"></span>
     </div>
 

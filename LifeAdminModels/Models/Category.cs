@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static LifeAdminModels.GCommons.DataConstants.Category;
 
 namespace LifeAdminModels.Models
 {
@@ -6,7 +7,7 @@ namespace LifeAdminModels.Models
     {
         public int Id { get; set; }
 
-        [Required, MaxLength(50)]
+        [Required, MaxLength(NameMaxLength)]
         public string Name { get; set; } = null!;
     }
 }

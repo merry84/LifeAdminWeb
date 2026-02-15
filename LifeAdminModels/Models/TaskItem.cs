@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static LifeAdminModels.GCommons.DataConstants.TaskItem;
 
 
 namespace LifeAdminModels.Models
@@ -7,10 +8,10 @@ namespace LifeAdminModels.Models
     {
         public int Id { get; set; }
 
-        [Required, MaxLength(80)]
+        [Required, MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
 
-        [MaxLength(500)]
+        [MaxLength(DescriptionMaxLength)]
         public string? Description { get; set; }
 
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static LifeAdminModels.GCommons.DataConstants.CategoryFormViewModel;
 
 
 namespace ViewModels
@@ -8,7 +9,7 @@ namespace ViewModels
         public int Id { get; set; }
 
         [Required]
-        [StringLength(40, MinimumLength = 2)]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; } = null!;
     }
 }
