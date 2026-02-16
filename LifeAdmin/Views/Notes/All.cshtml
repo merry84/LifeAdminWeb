@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ViewModels.NoteListItemViewModel>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">My Notes</h2>
+    <a class="btn btn-primary dash-pill" asp-action="Create">+ New Note</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="card p-4">
+        <div class="text-muted">No notes yet. Create your first one.</div>
+    </div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var n in Model)
+        {
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="fw-semibold">@n.Title</div>
+                        <div class="text-muted mt-2" style="min-height:48px;">@n.ContentPreview</div>
+
+                        <div class="d-flex gap-2 mt-3">
+                            <a class="btn btn-outline-secondary btn-sm dash-pill flex-grow-1"
+                               asp-action="Edit" asp-route-id="@n.Id">Edit</a>
+
+                            <form asp-action="Delete" asp-route-id="@n.Id" method="post" class="flex-grow-1">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-outline-danger btn-sm dash-pill w-100"
+                                        onclick="return confirm('Delete this note?');">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

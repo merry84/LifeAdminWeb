@@ -1,18 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using static GCommon.DataConstants.User;
 
-namespace LifeAdminModels.Models
+public class ApplicationUser : IdentityUser
 {
-    public class ApplicationUser : IdentityUser
-    {
-        [MaxLength(40)]
-        public string? DisplayName { get; set; }
+    [MaxLength(DisplayNameMaxLength)]
+    public string? DisplayName { get; set; }
 
-       
-         public string FirstName { get; set; } = null!;
-         
-        public string LastName { get; set; } = null!;
-        
+    [Required]
+    [MaxLength(FirstNameMaxLength)]
+    public string FirstName { get; set; } = null!;
 
-    }
+    [Required]
+    [MaxLength(LastNameMaxLength)]
+    public string LastName { get; set; } = null!;
 }

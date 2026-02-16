@@ -1,20 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using static GCommon.DataConstants.ProfileViewModel;
 namespace ViewModels
 {
     public class ProfileViewModel
     {
         [Required]
-        [StringLength(40, MinimumLength = 2)]
-        [Display(Name = "First name")]
+        [StringLength(FirstNameMaxLength)]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; } = null!;
 
         [Required]
-        [StringLength(40, MinimumLength = 2)]
-        [Display(Name = "Last name")]
+        [StringLength(LastNameMaxLength)]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; } = null!;
 
-        [StringLength(40)]
+        [StringLength(DisplayNameMaxLength)]
         [Display(Name = "Display name")]
         public string? DisplayName { get; set; }
 

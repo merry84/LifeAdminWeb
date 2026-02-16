@@ -17,4 +17,6 @@ public static class NotificationMessages
     {
         public const string InvalidCategory = "Invalid category.";
     }
+
+
 }

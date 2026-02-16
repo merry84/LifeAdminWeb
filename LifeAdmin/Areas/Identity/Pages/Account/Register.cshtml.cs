@@ -1,9 +1,9 @@
-﻿using LifeAdminModels.Models;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using static GCommon.DataConstants.User;
 
 namespace LifeAdmin.Web.Areas.Identity.Pages.Account
 {
@@ -32,26 +32,27 @@ namespace LifeAdmin.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [StringLength(40, MinimumLength = 2)]
+            [StringLength(FirstNameMaxLength, MinimumLength = 2)]
             [Display(Name = "First name")]
             public string FirstName { get; set; } = null!;
 
             [Required]
-            [StringLength(40, MinimumLength = 2)]
+            [StringLength(LastNameMaxLength, MinimumLength = 2)]
             [Display(Name = "Last name")]
             public string LastName { get; set; } = null!;
 
-            [StringLength(40)]
+            [StringLength(DisplayNameMaxLength)]
             [Display(Name = "Display name")]
             public string? DisplayName { get; set; }
 
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
+            [StringLength(EmailMaxLength, MinimumLength = 5)]
             public string Email { get; set; } = null!;
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(PasswordMaxLength, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = PasswordMinLength)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; } = null!;
@@ -87,12 +88,12 @@ namespace LifeAdmin.Web.Areas.Identity.Pages.Account
 
             var user = new ApplicationUser
             {
-                UserName = Input.Email, 
+                UserName = Input.Email,
                 Email = Input.Email,
-                FirstName = firstName,
-                LastName = lastName,
-                DisplayName = displayName
+                FirstName = Input.FirstName,
+                LastName = Input.LastName
             };
+
 
             var result = await userManager.CreateAsync(user, Input.Password);
 
