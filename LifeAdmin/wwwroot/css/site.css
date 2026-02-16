@@ -215,6 +215,52 @@ header, .navbar {
 .dropdown-menu {
     z-index: 1060;
 }
+/* ===== Landing page (guest) ===== */
+
+.landing-hero {
+    background: rgba(255,255,255,0.78);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+    backdrop-filter: blur(10px);
+}
+
+.landing-card {
+    background: rgba(255,255,255,0.70);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    backdrop-filter: blur(10px);
+}
+
+.landing-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    background: rgba(13,110,253,0.10);
+    font-size: 22px;
+}
+
+.landing-icon-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: rgba(13,110,253,0.10);
+    font-size: 18px;
+}
+.landing-hero h1 {
+    letter-spacing: -0.02em;
+}
+
+.landing-hero .lead {
+    font-size: 1.1rem;
+}
+
+
+
+
 
 
 

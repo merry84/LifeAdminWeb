@@ -2,11 +2,94 @@
 
 @if (!(User.Identity?.IsAuthenticated ?? false))
 {
-    <div class="p-4 p-md-5 bg-white rounded-4 shadow-sm">
-        <h1 class="display-6 fw-semibold mb-2">LifeAdmin</h1>
-        <p class="text-muted mb-3">Organize tasks, notes and categories in one place.</p>
-        <a class="btn btn-primary dash-pill" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        <a class="btn btn-outline-secondary ms-2 dash-pill" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    <div class="landing-hero p-4 p-md-5 mb-4 rounded-4">
+        <div class="row align-items-center g-4">
+            <div class="col-12 col-lg-7">
+                <h1 class="display-5 fw-semibold mb-3">
+                    Organize your life.
+                    <br class="d-none d-md-block" />
+                    One simple dashboard.
+                </h1>
+
+                <p class="text-muted mb-4 lead">
+                    Tasks, notes and categories in one clean, secure workspace.
+                </p>
+                <div class="d-flex flex-column flex-sm-row gap-2">
+                    <a class="btn btn-primary dash-pill px-4"
+                       asp-area="Identity" asp-page="/Account/Register">Get Started</a>
+
+                    <a class="btn btn-outline-secondary dash-pill px-4"
+                       asp-area="Identity" asp-page="/Account/Login">I already have an account</a>
+                </div>
+
+            </div>
+
+            <div class="col-12 col-lg-5">
+                <div class="landing-card p-4 rounded-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="landing-icon">✅</div>
+                        <div>
+                            <div class="fw-semibold">Task Management</div>
+                            <div class="text-muted small">Create, edit, track status.</div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="landing-icon">📝</div>
+                        <div>
+                            <div class="fw-semibold">Quick Notes</div>
+                            <div class="text-muted small">Save ideas and reminders.</div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="landing-icon">🏷️</div>
+                        <div>
+                            <div class="fw-semibold">Categories</div>
+                            <div class="text-muted small">Organize everything cleanly.</div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4" />
+
+                    <div class="text-muted small">
+                        Your content is protected with authentication and owner-based access.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-12 col-md-4">
+            <div class="card p-4 h-100">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <div class="landing-icon-sm">⚡</div>
+                    <h5 class="mb-0">Fast workflow</h5>
+                </div>
+                <div class="text-muted">Create tasks and notes in seconds with a clean UI.</div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="card p-4 h-100">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <div class="landing-icon-sm">🔒</div>
+                    <h5 class="mb-0">Secure by default</h5>
+                </div>
+                <div class="text-muted">Identity login + authorization so only you access your data.</div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="card p-4 h-100">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <div class="landing-icon-sm">✨</div>
+                    <h5 class="mb-0">Modern look</h5>
+                </div>
+                <div class="text-muted">Glass UI, soft background and consistent components.</div>
+            </div>
+        </div>
     </div>
 }
 else

@@ -116,7 +116,7 @@ namespace LifeAdminData.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -162,7 +162,7 @@ namespace LifeAdminData.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Notes");
+                    b.ToTable("Notes", (string)null);
                 });
 
             modelBuilder.Entity("LifeAdminModels.Models.TaskItem", b =>
@@ -201,7 +201,7 @@ namespace LifeAdminData.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("TaskItems");
+                    b.ToTable("TaskItems", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
