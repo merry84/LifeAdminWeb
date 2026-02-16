@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using LifeAdminModels.Models;
 
-using static LifeAdminModels.GCommons.DataConstants.TaskFormViewModel;
-using static LifeAdminModels.GCommons.ValidationMessages;
+using static GCommon.DataConstants.TaskFormViewModel;
+using static GCommon.ValidationMessages;
 namespace ViewModels
 {
     public class TaskFormViewModel

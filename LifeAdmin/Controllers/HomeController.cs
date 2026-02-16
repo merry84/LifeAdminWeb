@@ -1,5 +1,4 @@
-﻿using LifeAdmin.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using ViewModels;
 
@@ -11,13 +10,10 @@ namespace LifeAdmin.Web.Controllers
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+            => _logger = logger;
 
         public IActionResult Index()
         {
-            TempData.SetSuccess("Toast test ✅");
             return View();
         }
 

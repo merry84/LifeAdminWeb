@@ -1,4 +1,4 @@
-﻿namespace LifeAdminModels.GCommons
+﻿namespace GCommon
 {
     public static class DataConstants
     {
@@ -12,6 +12,7 @@
         public static class Category
         {
             public const int NameMaxLength = 50;
+
         }
 
         public static class Note

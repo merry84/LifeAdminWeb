@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static LifeAdminModels.GCommons.DataConstants.TaskItem;
+using static GCommon.DataConstants.TaskItem;
 
 
 namespace LifeAdminModels.Models

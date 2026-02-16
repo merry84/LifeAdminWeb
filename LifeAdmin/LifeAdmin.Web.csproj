@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GCommon\GCommon.csproj" />
     <ProjectReference Include="..\LifeAdminData\LifeAdminData.csproj" />
     <ProjectReference Include="..\LifeAdminServices\LifeAdminServices.csproj" />
     <ProjectReference Include="..\ViewModels\ViewModels.csproj" />

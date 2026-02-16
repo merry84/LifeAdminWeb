@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static LifeAdminModels.GCommons.DataConstants.CategoryFormViewModel;
-
+using static GCommon.DataConstants.CategoryFormViewModel;
 
 namespace ViewModels
 {

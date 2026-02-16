@@ -1,11 +1,11 @@
-﻿using LifeAdmin.Infrastructure;
+﻿using LifeAdmin.Web.Infrastructure;
 using LifeAdminModels.Models;
 using LifeAdminServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ViewModels;
-using static LifeAdminModels.GCommons.NotificationMessages;
+using static GCommon.NotificationMessages;
 
 
 namespace LifeAdmin.Web.Controllers
@@ -37,13 +37,27 @@ namespace LifeAdmin.Web.Controllers
             var all = await tasks.GetAllAsync();
 
             var users = userManager.Users
-                .Select(u => new { u.Id, u.Email, u.UserName })
+                .Select(u => new
+                {
+                    u.Id,
+                    u.Email,
+                    u.UserName,
+                    u.DisplayName,
+                    u.FirstName,
+                    u.LastName
+                })
                 .ToList()
                 .ToDictionary(u => u.Id, u => u);
 
             var model = all.Select(t =>
             {
                 users.TryGetValue(t.OwnerId, out var u);
+
+                string ownerName =
+                    !string.IsNullOrWhiteSpace(u?.DisplayName) ? u!.DisplayName! :
+                    (!string.IsNullOrWhiteSpace(u?.FirstName) || !string.IsNullOrWhiteSpace(u?.LastName))
+                        ? $"{u?.FirstName} {u?.LastName}".Trim()
+                        : (u?.UserName ?? "Unknown");
 
                 return new TaskListViewModel
                 {
@@ -53,12 +67,14 @@ namespace LifeAdmin.Web.Controllers
                     Status = t.Status,
                     CreatedOn = t.CreatedOn,
                     OwnerEmail = u?.Email,
-                    OwnerUserName = u?.UserName
+                    OwnerUserName = ownerName
                 };
             });
 
+
             return View(model);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> All()

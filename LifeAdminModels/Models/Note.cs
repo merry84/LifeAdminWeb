@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static LifeAdminModels.GCommons.DataConstants.Note;
+using static GCommon.DataConstants.Note;
 namespace LifeAdminModels.Models
 {
     public class Note

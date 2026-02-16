@@ -1,4 +1,4 @@
-﻿namespace LifeAdminModels.GCommons
+﻿namespace GCommon
 {
     public static class ValidationMessages
     {

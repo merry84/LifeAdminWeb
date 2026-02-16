@@ -1,6 +1,6 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using LifeAdminModels.Models
+﻿@using LifeAdminModels.Models
 @using LifeAdminServices.Contracts
+@using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
 @inject ILayoutService LayoutService
 
@@ -35,6 +35,10 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Tasks" asp-action="All">My Tasks</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Users" asp-action="Profile">Profile</a>
+                            </li>
+
 
                             @if (User.IsInRole(SeedData.AdminRoleName))
                             {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using static LifeAdminModels.GCommons.NotificationKeys;
+using static GCommon.NotificationKeys;
 
-namespace LifeAdmin.Infrastructure;
+namespace LifeAdmin.Web.Infrastructure;
 
 public static class TempDataExtensions
 {
