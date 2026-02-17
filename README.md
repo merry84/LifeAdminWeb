@@ -33,7 +33,7 @@ The project follows a clean layered structure:
 
 - **ASP.NET Core MVC**
 - **Entity Framework Core**
-- **SQL Server**
+- **- SQL Server (LocalDB)**
 - **ASP.NET Core Identity**
 - **Bootstrap 5**
 - **C# / .NET**
@@ -42,34 +42,59 @@ The project follows a clean layered structure:
 
 ## 🚀 Getting Started
 
+## Requirements
+
+* .NET 8 SDK
+* SQL Server LocalDB (installed with Visual Studio)
+
+---
+
+## Getting Started
+
 ### 1. Clone the repository
 
-bash
-git clone https://github.com/merry84/LifeAdminWeb
+```bash
+git clone https://github.com/merry84/LifeAdminWeb.git
 cd LifeAdminWeb
+```
 
 ### 2. Apply database migrations
-Update-Database
+
+```bash
+dotnet ef database update --project .\LifeAdminData\LifeAdminData.csproj --startup-project .\LifeAdmin\LifeAdmin.Web.csproj
+```
 
 ### 3. Run the application
 
-Open the solution in Visual Studio and press:
+```bash
+dotnet run --project .\LifeAdmin\LifeAdmin.Web.csproj
+```
 
-Ctrl + F5
+---
 
-## 🔐 User Roles
+## Default Database Configuration
 
-- User
+The project uses **SQL Server LocalDB** by default.
+You can change the connection string in:
 
-Manages personal tasks, notes, and categories
+```
+appsettings.json
+```
 
-Access limited to owned data
+---
 
-- Admin
+## User Roles
 
-Can view all tasks
+### User
 
-Can manage categories globally
+* Manages personal tasks, notes, and categories
+* Access limited to owned data
+
+### Admin
+
+* Can view all tasks
+* Can manage categories globally
+
 
 ## 📸 Screenshots
 
