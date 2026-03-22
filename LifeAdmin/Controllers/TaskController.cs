@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using ViewModels;
 using static GCommon.NotificationMessages;
 
-
 namespace LifeAdmin.Web.Controllers
 {
     [Authorize]
@@ -17,7 +16,7 @@ namespace LifeAdmin.Web.Controllers
         private readonly ICategoryService categories;
         private readonly UserManager<ApplicationUser> userManager;
 
-        private bool IsAdmin => User.IsInRole("Admin");
+        private bool IsAdmin => User.IsInRole("Administrator");
         private string UserId => userManager.GetUserId(User)!;
 
         public TasksController(
@@ -30,7 +29,7 @@ namespace LifeAdmin.Web.Controllers
             this.userManager = userManager;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public async Task<IActionResult> AllUsers()
         {
@@ -69,26 +68,25 @@ namespace LifeAdmin.Web.Controllers
                     OwnerEmail = u?.Email,
                     OwnerUserName = ownerName
                 };
-            });
-
+            }).ToList();
 
             return View(model);
         }
 
-
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(
+            string? searchTerm,
+            int? categoryId,
+            int? status,
+            int currentPage = 1)
         {
-            var mine = await tasks.GetMineAsync(UserId);
-
-            var model = mine.Select(t => new TaskListViewModel
-            {
-                Id = t.Id,
-                Title = t.Title,
-                CategoryName = t.Category.Name,
-                Status = t.Status,
-                CreatedOn = t.CreatedOn
-            }).ToList();
+            var model = await tasks.GetAllAsync(
+                UserId,
+                searchTerm,
+                categoryId,
+                status,
+                currentPage,
+                5);
 
             return View(model);
         }
@@ -110,7 +108,9 @@ namespace LifeAdmin.Web.Controllers
         public async Task<IActionResult> Create(TaskFormViewModel vm)
         {
             if (!await categories.ExistsAsync(vm.CategoryId))
+            {
                 ModelState.AddModelError(nameof(vm.CategoryId), Categories.InvalidCategory);
+            }
 
             if (!ModelState.IsValid)
             {
@@ -149,7 +149,10 @@ namespace LifeAdmin.Web.Controllers
                 ? await tasks.GetByIdAsync(id)
                 : await tasks.GetByIdOwnedAsync(id, UserId);
 
-            if (task is null) return NotFound();
+            if (task == null)
+            {
+                return NotFound();
+            }
 
             var vm = new TaskDetailsViewModel
             {
@@ -171,7 +174,10 @@ namespace LifeAdmin.Web.Controllers
                 ? await tasks.GetByIdAsync(id)
                 : await tasks.GetByIdOwnedAsync(id, UserId);
 
-            if (task is null) return NotFound();
+            if (task == null)
+            {
+                return NotFound();
+            }
 
             var vm = new TaskFormViewModel
             {
@@ -194,10 +200,15 @@ namespace LifeAdmin.Web.Controllers
                 ? await tasks.GetByIdAsync(vm.Id)
                 : await tasks.GetByIdOwnedAsync(vm.Id, UserId);
 
-            if (task is null) return NotFound();
+            if (task == null)
+            {
+                return NotFound();
+            }
 
             if (!await categories.ExistsAsync(vm.CategoryId))
+            {
                 ModelState.AddModelError(nameof(vm.CategoryId), Categories.InvalidCategory);
+            }
 
             if (!ModelState.IsValid)
             {
@@ -224,7 +235,6 @@ namespace LifeAdmin.Web.Controllers
             }
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -232,7 +242,10 @@ namespace LifeAdmin.Web.Controllers
                 ? await tasks.GetByIdAsync(id)
                 : await tasks.GetByIdOwnedAsync(id, UserId);
 
-            if (task is null) return NotFound();
+            if (task == null)
+            {
+                return NotFound();
+            }
 
             var vm = new TaskDeleteViewModel
             {
@@ -248,25 +261,28 @@ namespace LifeAdmin.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
-        public async Task<IActionResult> DeletePost(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var task = IsAdmin
                 ? await tasks.GetByIdAsync(id)
                 : await tasks.GetByIdOwnedAsync(id, UserId);
 
-            if (task is null) return NotFound();
+            if (task == null)
+            {
+                return NotFound();
+            }
 
             try
             {
                 await tasks.DeleteAsync(task);
                 TempData.SetSuccess(Tasks.Deleted);
-                return RedirectToAction(nameof(All));
             }
             catch
             {
                 TempData.SetError(Tasks.DeleteFailed);
-                return RedirectToAction(nameof(All));
             }
+
+            return RedirectToAction(nameof(All));
         }
     }
 }

@@ -1,9 +1,18 @@
 ﻿using LifeAdminModels.Models;
+using ViewModels;
 
 namespace LifeAdminServices.Contracts
 {
     public interface ITaskService
     {
+        Task<TaskQueryViewModel> GetAllAsync(
+               string userId,
+               string? searchTerm,
+               int? categoryId,
+               int? status,
+               int currentPage,
+               int tasksPerPage);
+
         Task<IEnumerable<TaskItem>> GetAllAsync();
         Task<TaskItem?> GetByIdAsync(int id);
 

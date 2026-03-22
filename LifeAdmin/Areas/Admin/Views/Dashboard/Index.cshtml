@@ -1,0 +1,116 @@
+﻿@model ViewModels.DashboardStatsViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="admin-dashboard-page">
+    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-4 gap-3">
+        <div>
+            <h1 class="admin-title mb-1">Admin Dashboard</h1>
+            <p class="admin-subtitle mb-0">
+                Overview of users, tasks, notes and categories in LifeAdmin.
+            </p>
+        </div>
+
+        <div class="admin-badge">
+            Workspace Overview
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6 col-xl-3">
+            <div class="stats-card stats-card-users">
+                <div class="stats-card-label">Total Users</div>
+                <div class="stats-card-value">@Model.TotalUsers</div>
+                <div class="stats-card-meta">Registered accounts</div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="stats-card stats-card-tasks">
+                <div class="stats-card-label">Total Tasks</div>
+                <div class="stats-card-value">@Model.TotalTasks</div>
+                <div class="stats-card-meta">All created tasks</div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="stats-card stats-card-notes">
+                <div class="stats-card-label">Total Notes</div>
+                <div class="stats-card-value">@Model.TotalNotes</div>
+                <div class="stats-card-meta">Saved personal notes</div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="stats-card stats-card-categories">
+                <div class="stats-card-label">Total Categories</div>
+                <div class="stats-card-value">@Model.CategoriesCount</div>
+                <div class="stats-card-meta">Available task categories</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-1">
+        <div class="col-lg-8">
+            <div class="admin-panel-card">
+                <div class="admin-panel-card-header">
+                    <h4 class="mb-1">System Snapshot</h4>
+                    <p class="text-muted mb-0">Quick summary of current platform activity.</p>
+                </div>
+
+                <div class="snapshot-grid">
+                    <div class="snapshot-item">
+                        <span class="snapshot-label">Users</span>
+                        <strong>@Model.TotalUsers</strong>
+                    </div>
+                    <div class="snapshot-item">
+                        <span class="snapshot-label">Tasks</span>
+                        <strong>@Model.TotalTasks</strong>
+                    </div>
+                    <div class="snapshot-item">
+                        <span class="snapshot-label">Notes</span>
+                        <strong>@Model.TotalNotes</strong>
+                    </div>
+                    <div class="snapshot-item">
+                        <span class="snapshot-label">Categories</span>
+                        <strong>@Model.CategoriesCount</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="admin-panel-card h-100">
+                <div class="admin-panel-card-header">
+                    <h4 class="mb-1">Admin Shortcuts</h4>
+                    <p class="text-muted mb-0">Fast access to management sections.</p>
+                </div>
+
+                <div class="d-grid gap-2 mt-3">
+                    <a class="btn btn-admin-shortcut"
+                       asp-area=""
+                       asp-controller="Tasks"
+                       asp-action="AllUsers">
+                        Manage All Tasks
+                    </a>
+
+                    <a class="btn btn-admin-shortcut"
+                       asp-area=""
+                       asp-controller="Categories"
+                       asp-action="All">
+                        Manage Categories
+                    </a>
+
+                    <a class="btn btn-admin-shortcut"
+                       asp-area=""
+                       asp-controller="Home"
+                       asp-action="Index">
+                        Back to Main Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

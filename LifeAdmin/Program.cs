@@ -48,10 +48,16 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
 await SeedData.SeedAdminAsync(app.Services, app.Configuration);
+
+await DbSeeder.SeedAsync(app.Services, builder.Configuration);
 
 app.Run();

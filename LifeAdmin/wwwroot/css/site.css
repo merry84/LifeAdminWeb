@@ -258,8 +258,246 @@ header, .navbar {
     font-size: 1.1rem;
 }
 
+.brand-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.18);
+}
 
+.brand-title {
+    font-size: 1rem;
+    color: #111827;
+}
 
+.brand-subtitle {
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+}
+
+.navbar {
+    backdrop-filter: blur(10px);
+}
+
+.nav-pill {
+    color: #374151 !important;
+    font-weight: 500;
+    padding: 0.65rem 1rem !important;
+    border-radius: 999px;
+    transition: all 0.2s ease;
+}
+
+    .nav-pill:hover,
+    .nav-pill:focus {
+        background-color: #f3f4f6;
+        color: #111827 !important;
+    }
+
+.navbar-nav .nav-link.active,
+.navbar-nav .show > .nav-link {
+    background: #eef2ff;
+    color: #4338ca !important;
+}
+
+.dropdown-menu-modern {
+    min-width: 220px;
+    border-radius: 18px;
+    padding: 0.6rem;
+    margin-top: 0.8rem;
+    background: #ffffff;
+}
+
+    .dropdown-menu-modern .dropdown-item {
+        border-radius: 12px;
+        font-weight: 500;
+        color: #374151;
+        transition: all 0.2s ease;
+    }
+
+        .dropdown-menu-modern .dropdown-item:hover {
+            background: #f5f3ff;
+            color: #4c1d95;
+        }
+
+.dropdown-header {
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        margin-top: 1rem;
+    }
+
+    .nav-pill {
+        border-radius: 14px;
+        padding: 0.8rem 0.9rem !important;
+    }
+}
+.admin-dashboard-page {
+    padding-top: 0.5rem;
+}
+
+.admin-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.02em;
+}
+
+.admin-subtitle {
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+.admin-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.8rem 1.1rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+    color: #4338ca;
+    font-weight: 600;
+    font-size: 0.92rem;
+}
+
+.stats-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    padding: 1.4rem;
+    min-height: 180px;
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .stats-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
+    }
+
+    .stats-card::after {
+        content: "";
+        position: absolute;
+        right: -20px;
+        top: -20px;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        opacity: 0.15;
+    }
+
+.stats-card-users::after {
+    background: #4f46e5;
+}
+
+.stats-card-tasks::after {
+    background: #7c3aed;
+}
+
+.stats-card-notes::after {
+    background: #0ea5e9;
+}
+
+.stats-card-categories::after {
+    background: #10b981;
+}
+
+.stats-card-label {
+    font-size: 0.95rem;
+    color: #6b7280;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.stats-card-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #111827;
+    margin-bottom: 0.7rem;
+}
+
+.stats-card-meta {
+    color: #9ca3af;
+    font-size: 0.92rem;
+}
+
+.admin-panel-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 1.5rem;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+.admin-panel-card-header h4 {
+    font-weight: 700;
+    color: #111827;
+}
+
+.snapshot-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.snapshot-item {
+    border-radius: 18px;
+    padding: 1rem 1.1rem;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+}
+
+.snapshot-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 0.35rem;
+}
+
+.snapshot-item strong {
+    font-size: 1.3rem;
+    color: #111827;
+}
+
+.btn-admin-shortcut {
+    border-radius: 14px;
+    padding: 0.85rem 1rem;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+}
+
+    .btn-admin-shortcut:hover {
+        color: #fff;
+        opacity: 0.95;
+    }
+
+@media (max-width: 767.98px) {
+    .admin-title {
+        font-size: 1.8rem;
+    }
+
+    .snapshot-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-card {
+        min-height: auto;
+    }
+}
 
 
 

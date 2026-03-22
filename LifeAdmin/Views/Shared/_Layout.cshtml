@@ -4,7 +4,6 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject ILayoutService LayoutService
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,61 +16,109 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LifeAdmin</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm border-bottom py-3">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="brand-logo">L</span>
+                    <span class="d-flex flex-column lh-sm">
+                        <span class="brand-title">LifeAdmin</span>
+                        <small class="text-muted brand-subtitle">Productivity Hub</small>
+                    </span>
+                </a>
+
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav mx-auto align-items-lg-center gap-lg-2">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link nav-pill" asp-area="" asp-controller="Home" asp-action="Index">
+                                Dashboard
+                            </a>
                         </li>
 
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Tasks" asp-action="All">My Tasks</a>
+                                <a class="nav-link nav-pill" asp-area="" asp-controller="Tasks" asp-action="All">
+                                    My Tasks
+                                </a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Users" asp-action="Profile">Profile</a>
+                                <a class="nav-link nav-pill" asp-area="" asp-controller="Users" asp-action="Profile">
+                                    Profile
+                                </a>
                             </li>
 
-
-                            @if (User.IsInRole(SeedData.AdminRoleName))
+                            @if (User.IsInRole("Administrator"))
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-controller="Tasks" asp-action="AllUsers">All Tasks</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-controller="Categories" asp-action="All">Categories</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link nav-pill dropdown-toggle"
+                                       href="#"
+                                       id="workspaceMenu"
+                                       role="button"
+                                       data-bs-toggle="dropdown"
+                                       aria-expanded="false">
+                                        Workspace
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-modern border-0 shadow" aria-labelledby="workspaceMenu">
+                                        <li class="dropdown-header text-uppercase small text-muted px-3">Admin Tools</li>
+                                        <li>
+                                            <a class="dropdown-item py-2"
+                                               asp-area="Admin"
+                                               asp-controller="Dashboard"
+                                               asp-action="Index">
+                                                Admin Dashboard
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item py-2"
+                                               asp-area=""
+                                               asp-controller="Tasks"
+                                               asp-action="AllUsers">
+                                                All Tasks
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item py-2"
+                                               asp-area=""
+                                               asp-controller="Categories"
+                                               asp-action="All">
+                                                Categories
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                             }
                         }
 
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+                            <a class="nav-link nav-pill" asp-area="" asp-controller="Home" asp-action="Privacy">
+                                Privacy
+                            </a>
                         </li>
                     </ul>
 
-                    <partial name="_LoginPartial" />
-                    
+                    <div class="d-flex align-items-center ms-lg-3">
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
     <partial name="_Notifications" />
+
     <main role="main" class="container flex-grow-1 py-3">
         @RenderBody()
     </main>
 
-
     <footer class="border-top footer text-muted py-2">
         <div class="container">
-            &copy; 2026 - LifeAdmin - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 - LifeAdmin -
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 
@@ -85,9 +132,8 @@
                 t.show();
             });
         });
-    </script>   
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
-
 </body>
 </html>

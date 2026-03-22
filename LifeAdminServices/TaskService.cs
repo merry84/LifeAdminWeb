@@ -2,6 +2,7 @@
 using LifeAdminModels.Models;
 using LifeAdminServices.Contracts;
 using Microsoft.EntityFrameworkCore;
+using ViewModels;
 
 namespace LifeAdminServices
 {
@@ -13,7 +14,7 @@ namespace LifeAdminServices
         public async Task<IEnumerable<TaskItem>> GetAllAsync()
             => await db.TaskItems
                 .Include(t => t.Category)
-                .Include(t => t.Owner) 
+                .Include(t => t.Owner)
                 .OrderByDescending(t => t.CreatedOn)
                 .ToListAsync();
 
@@ -58,7 +59,76 @@ namespace LifeAdminServices
              => await db.TaskItems
             .AnyAsync(t => t.Id == id && t.OwnerId == userId);
 
+        public async Task<TaskQueryViewModel> GetAllAsync(
+            string userId,
+            string? searchTerm,
+            int? categoryId,
+            int? status,
+            int currentPage,
+            int tasksPerPage)
+        {
+            var tasksQuery = db.TaskItems
+                .AsNoTracking()
+                .Include(t => t.Category)
+                .Include(t => t.Owner)
+                .Where(t => t.OwnerId == userId);
 
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                string normalizedSearch = searchTerm.ToLower();
 
+                tasksQuery = tasksQuery.Where(t =>
+                    t.Title.ToLower().Contains(normalizedSearch));
+            }
+
+            if (categoryId.HasValue)
+            {
+                tasksQuery = tasksQuery.Where(t => t.CategoryId == categoryId.Value);
+            }
+
+            if (status.HasValue)
+            {
+                tasksQuery = tasksQuery.Where(t => (int)t.Status == status.Value);
+            }
+
+            int totalTasks = await tasksQuery.CountAsync();
+
+            var tasks = await tasksQuery
+                .OrderByDescending(t => t.CreatedOn)
+                .Skip((currentPage - 1) * tasksPerPage)
+                .Take(tasksPerPage)
+                .Select(t => new TaskListViewModel
+                {
+                    Id = t.Id,
+                    Title = t.Title,
+                    CategoryName = t.Category.Name,
+                    Status = t.Status,
+                    CreatedOn = t.CreatedOn,
+                    OwnerUserName = t.Owner.UserName,
+                    OwnerEmail = t.Owner.Email
+                })
+                .ToListAsync();
+
+            var categories = await db.Categories
+                .AsNoTracking()
+                .Select(c => new TaskCategoryOptionViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToListAsync();
+
+            return new TaskQueryViewModel
+            {
+                SearchTerm = searchTerm,
+                CategoryId = categoryId,
+                Status = status,
+                CurrentPage = currentPage,
+                TasksPerPage = tasksPerPage,
+                TotalTasksCount = totalTasks,
+                Tasks = tasks,
+                Categories = categories
+            };
+        }
     }
 }

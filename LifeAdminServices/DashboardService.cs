@@ -9,7 +9,10 @@ namespace LifeAdminServices
     {
         private readonly ApplicationDbContext db;
 
-        public DashboardService(ApplicationDbContext db) => this.db = db;
+        public DashboardService(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
 
         public async Task<DashboardStatsViewModel> GetStatsAsync(string userId)
         {
@@ -17,7 +20,11 @@ namespace LifeAdminServices
             {
                 MyTasksCount = await db.TaskItems.CountAsync(t => t.OwnerId == userId),
                 MyNotesCount = await db.Notes.CountAsync(n => n.OwnerId == userId),
-                CategoriesCount = await db.Categories.CountAsync()
+                CategoriesCount = await db.Categories.CountAsync(),
+
+                TotalUsers = await db.Users.CountAsync(),
+                TotalTasks = await db.TaskItems.CountAsync(),
+                TotalNotes = await db.Notes.CountAsync()
             };
         }
     }

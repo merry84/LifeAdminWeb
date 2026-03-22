@@ -5,7 +5,7 @@ namespace LifeAdmin.Web.Infrastructure
 {
     public static class SeedData
     {
-        public const string AdminRoleName = "Admin";
+        public const string AdminRoleName = "Administrator";
 
         public static async Task SeedAdminAsync(IServiceProvider services, IConfiguration config)
         {
