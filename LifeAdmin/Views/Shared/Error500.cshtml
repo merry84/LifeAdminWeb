@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Server Error";
+}
+
+<div class="error-page-wrapper">
+    <div class="error-page-card text-center">
+        <div class="error-code">500</div>
+        <h1 class="error-title">Something went wrong</h1>
+        <p class="error-text">
+            An unexpected error occurred while processing your request. Please try again later.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary px-4">
+                Back to Home
+            </a>
+            <a asp-area="" asp-controller="Tasks" asp-action="All" class="btn btn-outline-secondary px-4">
+                My Tasks
+            </a>
+        </div>
+    </div>
+</div>

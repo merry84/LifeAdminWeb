@@ -36,8 +36,19 @@ builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<INotesService, NotesService>();
 
 
-
 var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error/500");
+    app.UseHsts();
+}
+else
+{
+    app.UseExceptionHandler("/Error/500");
+}
+
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
