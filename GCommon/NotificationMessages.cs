@@ -18,5 +18,14 @@ public static class NotificationMessages
         public const string InvalidCategory = "Invalid category.";
     }
 
-
+        public static class Notes
+        {
+            public const string Created = "Note created successfully.";
+            public const string CreateFailed = "Unable to create note.";
+            public const string Updated = "Note updated successfully.";
+            public const string UpdateFailed = "Unable to update note.";
+            public const string Deleted = "Note deleted successfully.";
+            public const string DeleteFailed = "Unable to delete note.";
+        }
+    
 }

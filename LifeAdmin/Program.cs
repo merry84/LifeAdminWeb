@@ -7,6 +7,7 @@ using LifeAdmin.Web.Infrastructure;
 
     
 using Microsoft.EntityFrameworkCore;
+using LifeAdmin.Web.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 

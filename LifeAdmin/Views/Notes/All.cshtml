@@ -1,42 +1,83 @@
-﻿@model IEnumerable<ViewModels.NoteListItemViewModel>
+﻿@model ViewModels.NoteQueryViewModel
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="mb-0">My Notes</h2>
-    <a class="btn btn-primary dash-pill" asp-action="Create">+ New Note</a>
+@{
+    ViewData["Title"] = "My Notes";
+    int totalPages = (int)Math.Ceiling((double)Model.TotalNotesCount / Model.NotesPerPage);
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <div>
+        <h1 class="mb-1">My Notes</h1>
+        <p class="text-muted mb-0">Capture and manage your notes in one place.</p>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary px-4">Create Note</a>
 </div>
 
-@if (!Model.Any())
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-10">
+        <input asp-for="SearchTerm" class="form-control" placeholder="Search by title or content..." />
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+</form>
+
+@if (!Model.Notes.Any())
 {
-    <div class="card p-4">
-        <div class="text-muted">No notes yet. Create your first one.</div>
+    <div class="card p-4 text-center">
+        <h4 class="mb-2">No notes found</h4>
+        <p class="text-muted mb-3">Try a different search or create your first note.</p>
+        <a asp-action="Create" class="btn btn-primary">Create Note</a>
     </div>
 }
 else
 {
-    <div class="row g-3">
-        @foreach (var n in Model)
+    <div class="row g-4">
+        @foreach (var note in Model.Notes)
         {
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="fw-semibold">@n.Title</div>
-                        <div class="text-muted mt-2" style="min-height:48px;">@n.ContentPreview</div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card h-100 p-3">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">@note.Title</h5>
+                        <p class="card-text text-muted flex-grow-1">@note.ContentPreview</p>
+                        @if (note.CreatedOn > DateTime.MinValue)
+                        {
+                            <small class="text-muted mb-3">Created on @note.CreatedOn.ToString("dd-MM-yyyy")</small>
+                        }
+                        else
+                        {
+                            <small class="text-muted mb-3">Created date unavailable</small>
+                        }
 
-                        <div class="d-flex gap-2 mt-3">
-                            <a class="btn btn-outline-secondary btn-sm dash-pill flex-grow-1"
-                               asp-action="Edit" asp-route-id="@n.Id">Edit</a>
-
-                            <form asp-action="Delete" asp-route-id="@n.Id" method="post" class="flex-grow-1">
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-outline-danger btn-sm dash-pill w-100"
-                                        onclick="return confirm('Delete this note?');">
-                                    Delete
-                                </button>
-                            </form>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a asp-action="Details" asp-route-id="@note.Id" class="btn btn-outline-secondary btn-sm">Details</a>
+                            <a asp-action="Edit" asp-route-id="@note.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@note.Id" class="btn btn-outline-danger btn-sm">Delete</a>
                         </div>
                     </div>
                 </div>
             </div>
         }
     </div>
+}
+
+@if (totalPages > 1)
+{
+    <nav class="mt-4">
+        <ul class="pagination">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link"
+                       asp-action="All"
+                       asp-route-searchTerm="@Model.SearchTerm"
+                       asp-route-currentPage="@i">
+                        @i
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
 }

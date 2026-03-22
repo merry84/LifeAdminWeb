@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static GCommon.DataConstants.Note;
+
 namespace LifeAdminModels.Models
 {
     public class Note
@@ -12,8 +13,11 @@ namespace LifeAdminModels.Models
         [Required, MaxLength(ContentMaxLength)]
         public string Content { get; set; } = null!;
 
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+
         [Required]
         public string OwnerId { get; set; } = null!;
+
         public ApplicationUser Owner { get; set; } = null!;
     }
 }

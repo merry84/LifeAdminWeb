@@ -1,14 +1,26 @@
-﻿using ViewModels;
+﻿using LifeAdminModels.Models;
+using ViewModels;
 
 namespace LifeAdminServices.Contracts
 {
     public interface INotesService
     {
-        Task<IEnumerable<NoteListItemViewModel>> GetMineAsync(string userId);
-        Task CreateAsync(NoteFormViewModel model, string userId);
-        Task<NoteFormViewModel?> GetForEditAsync(int id, string userId);
-        Task EditAsync(NoteFormViewModel model, string userId);
-        Task<bool> ExistsOwnedAsync(int id, string userId);
-        Task DeleteAsync(int id, string userId);
+        Task<NoteQueryViewModel> GetAllAsync(
+            string userId,
+            string? searchTerm,
+            int currentPage,
+            int notesPerPage);
+
+        Task<IEnumerable<Note>> GetMineAsync(string userId);
+
+        Task<Note?> GetByIdAsync(int id);
+
+        Task<Note?> GetByIdOwnedAsync(int id, string userId);
+
+        Task AddAsync(Note note);
+
+        Task UpdateAsync(Note note);
+
+        Task DeleteAsync(Note note);
     }
 }

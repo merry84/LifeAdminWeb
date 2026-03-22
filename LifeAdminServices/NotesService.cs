@@ -10,63 +10,94 @@ namespace LifeAdminServices
     {
         private readonly ApplicationDbContext db;
 
-        public NotesService(ApplicationDbContext db) => this.db = db;
+        public NotesService(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
 
-        public async Task<IEnumerable<NoteListItemViewModel>> GetMineAsync(string userId)
-            => await db.Notes
-                .Where(n => n.OwnerId == userId)
-                .OrderByDescending(n => n.Id)
+        public async Task<NoteQueryViewModel> GetAllAsync(
+            string userId,
+            string? searchTerm,
+            int currentPage,
+            int notesPerPage)
+        {
+            var notesQuery = db.Notes
+                .AsNoTracking()
+                .Where(n => n.OwnerId == userId);
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                string normalizedSearch = searchTerm.ToLower();
+
+                notesQuery = notesQuery.Where(n =>
+                    n.Title.ToLower().Contains(normalizedSearch) ||
+                    n.Content.ToLower().Contains(normalizedSearch));
+            }
+
+            int totalNotes = await notesQuery.CountAsync();
+
+            var notes = await notesQuery
+                .OrderByDescending(n => n.CreatedOn)
+                .Skip((currentPage - 1) * notesPerPage)
+                .Take(notesPerPage)
                 .Select(n => new NoteListItemViewModel
                 {
                     Id = n.Id,
                     Title = n.Title,
-                    ContentPreview = n.Content.Length > 120 ? n.Content.Substring(0, 120) + "…" : n.Content
+                    ContentPreview = n.Content.Length > 120
+                        ? n.Content.Substring(0, 120) + "..."
+                        : n.Content,
+                    CreatedOn = n.CreatedOn
                 })
                 .ToListAsync();
 
-        public async Task CreateAsync(NoteFormViewModel model, string userId)
-        {
-            var note = new Note
+            return new NoteQueryViewModel
             {
-                Title = model.Title,
-                Content = model.Content,
-                OwnerId = userId
+                SearchTerm = searchTerm,
+                CurrentPage = currentPage,
+                NotesPerPage = notesPerPage,
+                TotalNotesCount = totalNotes,
+                Notes = notes
             };
+        }
 
-            db.Notes.Add(note);
+        public async Task<IEnumerable<Note>> GetMineAsync(string userId)
+        {
+            return await db.Notes
+                .Include(n => n.Owner)
+                .Where(n => n.OwnerId == userId)
+                .OrderByDescending(n => n.CreatedOn)
+                .ToListAsync();
+        }
+
+        public async Task<Note?> GetByIdAsync(int id)
+        {
+            return await db.Notes
+                .Include(n => n.Owner)
+                .FirstOrDefaultAsync(n => n.Id == id);
+        }
+
+        public async Task<Note?> GetByIdOwnedAsync(int id, string userId)
+        {
+            return await db.Notes
+                .Include(n => n.Owner)
+                .FirstOrDefaultAsync(n => n.Id == id && n.OwnerId == userId);
+        }
+
+        public async Task AddAsync(Note note)
+        {
+            await db.Notes.AddAsync(note);
             await db.SaveChangesAsync();
         }
 
-        public async Task<NoteFormViewModel?> GetForEditAsync(int id, string userId)
-            => await db.Notes
-                .Where(n => n.Id == id && n.OwnerId == userId)
-                .Select(n => new NoteFormViewModel
-                {
-                    Id = n.Id,
-                    Title = n.Title,
-                    Content = n.Content
-                })
-                .FirstOrDefaultAsync();
-
-        public async Task EditAsync(NoteFormViewModel model, string userId)
+        public async Task UpdateAsync(Note note)
         {
-            var note = await db.Notes.FirstOrDefaultAsync(n => n.Id == model.Id && n.OwnerId == userId);
-            if (note == null) return;
-
-            note.Title = model.Title;
-            note.Content = model.Content;
-
+            db.Notes.Update(note);
             await db.SaveChangesAsync();
         }
 
-        public Task<bool> ExistsOwnedAsync(int id, string userId)
-            => db.Notes.AnyAsync(n => n.Id == id && n.OwnerId == userId);
-
-        public async Task DeleteAsync(int id, string userId)
+        public async Task DeleteAsync(Note note)
         {
-            var note = await db.Notes.FirstOrDefaultAsync(n => n.Id == id && n.OwnerId == userId);
-            if (note == null) return;
-
             db.Notes.Remove(note);
             await db.SaveChangesAsync();
         }

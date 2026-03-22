@@ -5,70 +5,123 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label asp-for="Input.Email" class="form-label">Email</label>
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Password</label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="checkbox mb-3">
-                    <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                    </label>
-                </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                </div>
-                <div class="mt-2">
-                    <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                </div>
-            </form>
-        </section>
-    </div>
-
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to log in.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured.
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="row g-0">
+            <div class="col-lg-6">
+                <div class="auth-form-panel">
+                    <div class="auth-header mb-4">
+                        <span class="auth-badge">Welcome back</span>
+                        <h1 class="auth-title mt-3">Log in to LifeAdmin</h1>
+                        <p class="auth-subtitle">
+                            Access your tasks, notes, categories and workspace tools from one place.
                         </p>
                     </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
+
+                    <form id="account" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Email" class="form-label auth-label">Email</label>
+                            <input asp-for="Input.Email"
+                                   class="form-control auth-input"
+                                   autocomplete="username"
+                                   aria-required="true"
+                                   placeholder="Enter your email" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.Password" class="form-label auth-label">Password</label>
+                            <input asp-for="Input.Password"
+                                   class="form-control auth-input"
+                                   autocomplete="current-password"
+                                   aria-required="true"
+                                   placeholder="Enter your password" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            <label asp-for="Input.RememberMe" class="form-check-label">
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+
+                        <button id="login-submit" type="submit" class="btn btn-primary w-100 auth-submit">
+                            Log in
+                        </button>
+
+                        <div class="auth-links mt-4">
+                            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create an account</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-6 d-none d-lg-flex">
+                <div class="auth-side-panel">
+                    <div>
+                        <span class="auth-side-kicker">Productivity Hub</span>
+                        <h2 class="auth-side-title">Stay organized and focused every day.</h2>
+                        <p class="auth-side-text">
+                            Manage tasks, keep notes, organize categories and access your admin workspace in one elegant dashboard.
+                        </p>
+                    </div>
+
+                    <div class="auth-feature-list">
+                        <div class="auth-feature-item">
+                            <strong>Task management</strong>
+                            <span>Create, track and filter tasks with a clean workflow.</span>
+                        </div>
+
+                        <div class="auth-feature-item">
+                            <strong>Smart organization</strong>
+                            <span>Keep categories, notes and personal productivity tools in one place.</span>
+                        </div>
+
+                        <div class="auth-feature-item">
+                            <strong>Admin tools</strong>
+                            <span>Use the dashboard to monitor users, tasks, notes and categories.</span>
+                        </div>
+                    </div>
+
+                    @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+                    {
+                        <div class="mt-4">
+                            <p class="mb-2 auth-social-label">Or continue with</p>
+
+                            <form id="external-account"
+                                  asp-page="./ExternalLogin"
+                                  asp-route-returnUrl="@Model.ReturnUrl"
+                                  method="post"
+                                  class="d-flex flex-wrap gap-2">
                                 @foreach (var provider in Model.ExternalLogins!)
                                 {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name">
+                                    <button type="submit"
+                                            class="btn btn-outline-secondary auth-social-btn"
+                                            name="provider"
+                                            value="@provider.Name"
+                                            title="Log in using your @provider.DisplayName account">
                                         @provider.DisplayName
                                     </button>
                                 }
-                            </p>
+                            </form>
                         </div>
-                    </form>
-                }
-            }
-        </section>
+                    }
+                    else
+                    {
+                        <div class="mt-4">
+                            <p class="mb-2 auth-social-label">External login</p>
+                            <div class="auth-feature-item">
+                                <span>No external providers are configured yet.</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
