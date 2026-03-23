@@ -6,7 +6,7 @@ namespace LifeAdminModels.Models
 {
     public class TaskItem
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required, MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
@@ -19,11 +19,11 @@ namespace LifeAdminModels.Models
         public WorkStatus Status { get; set; }
 
 
-        public int CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
         public Category Category { get; set; } = null!;
 
         [Required]
-        public string OwnerId { get; set; } = null!;
+        public string OwnerId { get; set; }
         public ApplicationUser Owner { get; set; } = null!;
     }
 }

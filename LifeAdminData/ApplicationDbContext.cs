@@ -1,6 +1,7 @@
 ﻿using LifeAdminModels.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
 namespace LifeAdminData
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -9,6 +10,7 @@ namespace LifeAdminData
             : base(options)
         {
         }
+
         public DbSet<TaskItem> TaskItems { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Note> Notes { get; set; } = null!;
@@ -19,22 +21,21 @@ namespace LifeAdminData
 
             builder.Entity<TaskItem>()
                 .HasOne(t => t.Owner)
-                .WithMany()
+                .WithMany(u => u.Tasks)
                 .HasForeignKey(t => t.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<TaskItem>()
+                .HasOne(t => t.Category)
+                .WithMany(c => c.Tasks)
+                .HasForeignKey(t => t.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Note>()
                 .HasOne(n => n.Owner)
-                .WithMany()
+                .WithMany(u => u.Notes)
                 .HasForeignKey(n => n.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Category>()
-                .HasData(
-                 new Category { Id = 1, Name = "Work" },
-                 new Category { Id = 2, Name = "Personal" },
-                 new Category { Id = 3, Name = "Health" }
-            );
         }
     }
 }

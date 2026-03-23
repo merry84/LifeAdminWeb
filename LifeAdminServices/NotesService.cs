@@ -70,14 +70,14 @@ namespace LifeAdminServices
                 .ToListAsync();
         }
 
-        public async Task<Note?> GetByIdAsync(int id)
+        public async Task<Note?> GetByIdAsync(Guid id)
         {
             return await db.Notes
                 .Include(n => n.Owner)
                 .FirstOrDefaultAsync(n => n.Id == id);
         }
 
-        public async Task<Note?> GetByIdOwnedAsync(int id, string userId)
+        public async Task<Note?> GetByIdOwnedAsync(Guid id, string userId)
         {
             return await db.Notes
                 .Include(n => n.Owner)

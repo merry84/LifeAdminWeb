@@ -4,7 +4,7 @@ namespace ViewModels
 {
     public class NoteFormViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]

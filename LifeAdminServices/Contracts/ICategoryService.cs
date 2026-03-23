@@ -6,10 +6,10 @@ namespace LifeAdminServices.Contracts
     public interface ICategoryService
     {
         Task<IEnumerable<SelectListItem>> GetAllForSelectAsync();
-        Task<bool> ExistsAsync(int id);
+        Task<bool> ExistsAsync(Guid id);
 
         Task<IEnumerable<Category>> GetAllAsync();
-        Task<Category?> GetByIdAsync(int id);
+        Task<Category?> GetByIdAsync(Guid id);
         Task AddAsync(Category category);
         Task UpdateAsync(Category category);
         Task DeleteAsync(Category category);

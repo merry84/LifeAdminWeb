@@ -5,9 +5,11 @@ namespace LifeAdminModels.Models
 {
     public class Category
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required, MaxLength(NameMaxLength)]
         public string Name { get; set; } = null!;
+
+        public ICollection<TaskItem> Tasks { get; set; } = new HashSet<TaskItem>();
     }
 }

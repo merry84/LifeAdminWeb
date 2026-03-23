@@ -1,13 +1,12 @@
 using LifeAdminData;
-using LifeAdminModels.Models;
 using Microsoft.AspNetCore.Identity;
 using LifeAdminServices.Contracts;
 using LifeAdminServices;
 using LifeAdmin.Web.Infrastructure;
 
-    
+
 using Microsoft.EntityFrameworkCore;
-using LifeAdmin.Web.Controllers;
+using LifeAdminModels.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,14 +38,14 @@ builder.Services.AddScoped<INotesService, NotesService>();
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error/500");
-    app.UseHsts();
+    app.UseDeveloperExceptionPage(); 
 }
 else
 {
     app.UseExceptionHandler("/Error/500");
+    app.UseHsts();
 }
 
 app.UseStatusCodePagesWithReExecute("/Error/{0}");
@@ -68,7 +67,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
-await SeedData.SeedAdminAsync(app.Services, app.Configuration);
 
 await DbSeeder.SeedAsync(app.Services, builder.Configuration);
 

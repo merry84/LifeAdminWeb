@@ -1,4 +1,5 @@
-﻿using LifeAdminServices.Contracts;
+﻿using LifeAdminModels.Models;
+using LifeAdminServices.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

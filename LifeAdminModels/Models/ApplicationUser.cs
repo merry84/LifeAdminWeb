@@ -2,16 +2,22 @@
 using System.ComponentModel.DataAnnotations;
 using static GCommon.DataConstants.User;
 
-public class ApplicationUser : IdentityUser
+namespace LifeAdminModels.Models
 {
-    [MaxLength(DisplayNameMaxLength)]
-    public string? DisplayName { get; set; }
+    public class ApplicationUser : IdentityUser
+    {
+        [MaxLength(DisplayNameMaxLength)]
+        public string? DisplayName { get; set; }
 
-    [Required]
-    [MaxLength(FirstNameMaxLength)]
-    public string FirstName { get; set; } = null!;
+        [Required]
+        [MaxLength(FirstNameMaxLength)]
+        public string FirstName { get; set; } = null!;
 
-    [Required]
-    [MaxLength(LastNameMaxLength)]
-    public string LastName { get; set; } = null!;
+        [Required]
+        [MaxLength(LastNameMaxLength)]
+        public string LastName { get; set; } = null!;
+
+        public ICollection<TaskItem> Tasks { get; set; } = new HashSet<TaskItem>();
+        public ICollection<Note> Notes { get; set; } = new HashSet<Note>();
+    }
 }

@@ -70,7 +70,7 @@ namespace LifeAdmin.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(Guid id)
         {
             var note = IsAdmin
                 ? await notes.GetByIdAsync(id)
@@ -93,7 +93,7 @@ namespace LifeAdmin.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             var note = IsAdmin
                 ? await notes.GetByIdAsync(id)
@@ -149,7 +149,7 @@ namespace LifeAdmin.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var note = IsAdmin
                 ? await notes.GetByIdAsync(id)
@@ -172,7 +172,7 @@ namespace LifeAdmin.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var note = IsAdmin
                 ? await notes.GetByIdAsync(id)

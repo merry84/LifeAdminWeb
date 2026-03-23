@@ -7,7 +7,7 @@ using ViewModels;
 
 namespace LifeAdmin.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrator")]
     public class CategoriesController : Controller
     {
         private readonly ICategoryService categories;
@@ -36,6 +36,7 @@ namespace LifeAdmin.Web.Controllers
             => View(new CategoryFormViewModel());
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CategoryFormViewModel vm)
         {
             if (!ModelState.IsValid) return View(vm);
@@ -47,7 +48,7 @@ namespace LifeAdmin.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             var c = await categories.GetByIdAsync(id);
             if (c is null) return NotFound();
@@ -57,6 +58,7 @@ namespace LifeAdmin.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CategoryFormViewModel vm)
         {
             var c = await categories.GetByIdAsync(vm.Id);
@@ -71,7 +73,7 @@ namespace LifeAdmin.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var c = await categories.GetByIdAsync(id);
             if (c is null) return NotFound();
@@ -81,7 +83,9 @@ namespace LifeAdmin.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var c = await categories.GetByIdAsync(id);
             if (c is null) return NotFound();

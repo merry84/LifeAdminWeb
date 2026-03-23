@@ -5,7 +5,7 @@ namespace LifeAdminModels.Models
 {
     public class Note
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required, MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;

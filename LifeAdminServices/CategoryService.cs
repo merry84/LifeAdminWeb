@@ -23,7 +23,7 @@ namespace LifeAdminServices
                 .ToListAsync();
 
 
-        public Task<bool> ExistsAsync(int id)
+        public Task<bool> ExistsAsync(Guid id)
             => db.Categories.AnyAsync(c => c.Id == id);
 
         public async Task<IEnumerable<Category>> GetAllAsync()
@@ -31,7 +31,7 @@ namespace LifeAdminServices
                 .OrderBy(c => c.Name)
                 .ToListAsync();
 
-        public Task<Category?> GetByIdAsync(int id)
+        public Task<Category?> GetByIdAsync(Guid id)
             => db.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
         public async Task AddAsync(Category category)

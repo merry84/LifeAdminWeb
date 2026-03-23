@@ -5,7 +5,7 @@ namespace ViewModels
 {
     public class CategoryFormViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]

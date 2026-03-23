@@ -8,7 +8,7 @@ namespace ViewModels
 {
     public class TaskFormViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required, MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
@@ -18,7 +18,7 @@ namespace ViewModels
 
         [Display(Name = "Category")]
         [Range(1, int.MaxValue, ErrorMessage = "Please select a category.")]
-        public int CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
 
         [Display(Name = "Status")]
         public WorkStatus Status { get; set; }

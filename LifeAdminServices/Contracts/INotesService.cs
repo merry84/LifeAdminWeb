@@ -13,9 +13,9 @@ namespace LifeAdminServices.Contracts
 
         Task<IEnumerable<Note>> GetMineAsync(string userId);
 
-        Task<Note?> GetByIdAsync(int id);
+        Task<Note?> GetByIdAsync(Guid id);
 
-        Task<Note?> GetByIdOwnedAsync(int id, string userId);
+        Task<Note?> GetByIdOwnedAsync(Guid id, string userId);
 
         Task AddAsync(Note note);
 

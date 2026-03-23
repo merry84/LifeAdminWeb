@@ -9,7 +9,11 @@ namespace LifeAdminServices
     public class TaskService : ITaskService
     {
         private readonly ApplicationDbContext db;
-        public TaskService(ApplicationDbContext db) => this.db = db;
+
+        public TaskService(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
 
         public async Task<IEnumerable<TaskItem>> GetAllAsync()
             => await db.TaskItems
@@ -18,29 +22,38 @@ namespace LifeAdminServices
                 .OrderByDescending(t => t.CreatedOn)
                 .ToListAsync();
 
-        public Task<TaskItem?> GetByIdAsync(int id)
-            => db.TaskItems
+        public async Task<IEnumerable<TaskItem>> GetAllAsync(string userId)
+            => await db.TaskItems
+                .Include(t => t.Category)
+                .Include(t => t.Owner)
+                .Where(t => t.OwnerId == userId)
+                .OrderByDescending(t => t.CreatedOn)
+                .ToListAsync();
+
+        public async Task<IEnumerable<TaskItem>> GetMineAsync(string userId)
+            => await db.TaskItems
+                .AsNoTracking()
+                .Include(t => t.Category)
+                .Include(t => t.Owner)
+                .Where(t => t.OwnerId == userId)
+                .OrderByDescending(t => t.CreatedOn)
+                .ToListAsync();
+
+        public async Task<TaskItem?> GetByIdAsync(Guid id)
+            => await db.TaskItems
                 .Include(t => t.Category)
                 .Include(t => t.Owner)
                 .FirstOrDefaultAsync(t => t.Id == id);
 
-
-
-        public async Task<IEnumerable<TaskItem>> GetMineAsync(string userId)
+        public async Task<TaskItem?> GetByIdOwnedAsync(Guid id, string userId)
             => await db.TaskItems
-                .Where(t => t.OwnerId == userId)
                 .Include(t => t.Category)
-                .OrderByDescending(t => t.CreatedOn)
-                .ToListAsync();
-
-        public Task<TaskItem?> GetByIdOwnedAsync(int id, string userId)
-            => db.TaskItems
-                .Include(t => t.Category)
+                .Include(t => t.Owner)
                 .FirstOrDefaultAsync(t => t.Id == id && t.OwnerId == userId);
 
         public async Task AddAsync(TaskItem task)
         {
-            db.TaskItems.Add(task);
+            await db.TaskItems.AddAsync(task);
             await db.SaveChangesAsync();
         }
 
@@ -55,14 +68,15 @@ namespace LifeAdminServices
             db.TaskItems.Remove(task);
             await db.SaveChangesAsync();
         }
-        public async Task<bool> ExistsOwnedAsync(int id, string userId)
-             => await db.TaskItems
-            .AnyAsync(t => t.Id == id && t.OwnerId == userId);
+
+        public async Task<bool> ExistsOwnedAsync(Guid id, string userId)
+            => await db.TaskItems
+                .AnyAsync(t => t.Id == id && t.OwnerId == userId);
 
         public async Task<TaskQueryViewModel> GetAllAsync(
             string userId,
             string? searchTerm,
-            int? categoryId,
+            Guid? categoryId,
             int? status,
             int currentPage,
             int tasksPerPage)
