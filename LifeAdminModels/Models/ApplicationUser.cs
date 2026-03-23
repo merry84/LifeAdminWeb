@@ -19,5 +19,7 @@ namespace LifeAdminModels.Models
 
         public ICollection<TaskItem> Tasks { get; set; } = new HashSet<TaskItem>();
         public ICollection<Note> Notes { get; set; } = new HashSet<Note>();
+
+        public ICollection<Document> Documents { get; set; } = new HashSet<Document>();
     }
 }

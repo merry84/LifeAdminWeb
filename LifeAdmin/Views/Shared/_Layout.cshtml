@@ -53,18 +53,37 @@
                                 </a>
                             </li>
 
-                            @if (User.IsInRole("Administrator"))
-                            {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link nav-pill dropdown-toggle"
-                                       href="#"
-                                       id="workspaceMenu"
-                                       role="button"
-                                       data-bs-toggle="dropdown"
-                                       aria-expanded="false">
-                                        Workspace
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-modern border-0 shadow" aria-labelledby="workspaceMenu">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link nav-pill dropdown-toggle"
+                                   href="#"
+                                   id="workspaceMenu"
+                                   role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    Workspace
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-modern border-0 shadow" aria-labelledby="workspaceMenu">
+                                    <li class="dropdown-header text-uppercase small text-muted px-3">Workspace</li>
+                                    <li>
+                                        <a class="dropdown-item py-2"
+                                           asp-area=""
+                                           asp-controller="Notes"
+                                           asp-action="All">
+                                            Notes
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item py-2"
+                                           asp-area=""
+                                           asp-controller="Documents"
+                                           asp-action="All">
+                                            Documents
+                                        </a>
+                                    </li>
+
+                                    @if (User.IsInRole("Administrator"))
+                                    {
+                                        <li><hr class="dropdown-divider" /></li>
                                         <li class="dropdown-header text-uppercase small text-muted px-3">Admin Tools</li>
                                         <li>
                                             <a class="dropdown-item py-2"
@@ -90,9 +109,9 @@
                                                 Categories
                                             </a>
                                         </li>
-                                    </ul>
-                                </li>
-                            }
+                                    }
+                                </ul>
+                            </li>
                         }
 
                         <li class="nav-item">
@@ -109,6 +128,7 @@
             </div>
         </nav>
     </header>
+
     <partial name="_Notifications" />
 
     <main role="main" class="container flex-grow-1 py-3">

@@ -15,6 +15,8 @@ namespace LifeAdminData
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Note> Notes { get; set; } = null!;
 
+        public DbSet<Document> Documents { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -35,6 +37,12 @@ namespace LifeAdminData
                 .HasOne(n => n.Owner)
                 .WithMany(u => u.Notes)
                 .HasForeignKey(n => n.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Document>()
+                .HasOne(d => d.Owner)
+                .WithMany(u => u.Documents)
+                .HasForeignKey(d => d.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

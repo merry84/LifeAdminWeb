@@ -1,0 +1,15 @@
+﻿using LifeAdminModels.Models;
+using ViewModels;
+
+namespace LifeAdminServices.Contracts
+{
+    public interface IDocumentService
+    {
+        Task<IEnumerable<DocumentListViewModel>> GetMineAsync(string userId);
+        Task<IEnumerable<DocumentListViewModel>> GetAllAsync();
+        Task<Document?> GetByIdAsync(Guid id);
+        Task<Document?> GetByIdOwnedAsync(Guid id, string userId);
+        Task AddAsync(Document document);
+        Task DeleteAsync(Document document);
+    }
+}

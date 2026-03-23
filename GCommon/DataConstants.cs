@@ -52,6 +52,13 @@
             public const int LastNameMaxLength = 40;
             public const int DisplayNameMaxLength = 40;
         }
-
+        public static class Document
+        {
+            public const int TitleMaxLength = 100;
+            public const int FileNameMaxLength = 255;
+            public const int StoredFileNameMaxLength = 255;
+            public const int ContentTypeMaxLength = 100;
+            public const long MaxFileSize = 5 * 1024 * 1024; // 5 MB
+        }
     }
 }
