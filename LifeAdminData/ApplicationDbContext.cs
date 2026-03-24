@@ -17,6 +17,9 @@ namespace LifeAdminData
 
         public DbSet<Document> Documents { get; set; } = null!;
 
+        public DbSet<Tag> Tags { get; set; } = null!;
+        public DbSet<TaskItemTag> TaskItemTags { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -44,6 +47,19 @@ namespace LifeAdminData
                 .WithMany(u => u.Documents)
                 .HasForeignKey(d => d.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<TaskItemTag>()
+                .HasKey(tt => new { tt.TaskItemId, tt.TagId });
+
+            builder.Entity<TaskItemTag>()
+                .HasOne(tt => tt.TaskItem)
+                .WithMany(t => t.TaskItemTags)
+                .HasForeignKey(tt => tt.TaskItemId);
+
+            builder.Entity<TaskItemTag>()
+                .HasOne(tt => tt.Tag)
+                .WithMany(t => t.TaskItems)
+                .HasForeignKey(tt => tt.TagId);
         }
     }
 }

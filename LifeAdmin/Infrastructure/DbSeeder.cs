@@ -1,6 +1,5 @@
 ﻿using LifeAdminData;
 using LifeAdminModels.Models;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +20,7 @@ namespace LifeAdmin.Web.Infrastructure
             await SeedRolesAsync(roleManager);
             await SeedAdminAsync(userManager, configuration);
             await SeedCategoriesAsync(dbContext);
+            await SeedTagsAsync(dbContext);
         }
 
         private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
@@ -88,6 +88,24 @@ namespace LifeAdmin.Web.Infrastructure
             };
 
             await dbContext.Categories.AddRangeAsync(categories);
+            await dbContext.SaveChangesAsync();
+        }
+
+        private static async Task SeedTagsAsync(ApplicationDbContext dbContext)
+        {
+            if (await dbContext.Tags.AnyAsync())
+            {
+                return;
+            }
+
+            var tags = new List<Tag>
+            {
+                new Tag { Id = Guid.NewGuid(), Name = "Important" },
+                new Tag { Id = Guid.NewGuid(), Name = "Work" },
+                new Tag { Id = Guid.NewGuid(), Name = "Personal" }
+            };
+
+            await dbContext.Tags.AddRangeAsync(tags);
             await dbContext.SaveChangesAsync();
         }
     }

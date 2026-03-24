@@ -17,8 +17,8 @@ namespace ViewModels
         public string? Description { get; set; }
 
         [Display(Name = "Category")]
-        [Range(1, int.MaxValue, ErrorMessage = "Please select a category.")]
-        public Guid CategoryId { get; set; }
+        [Required(ErrorMessage = "Please select a category.")]
+        public Guid? CategoryId { get; set; }
 
         [Display(Name = "Status")]
         public WorkStatus Status { get; set; }
@@ -26,5 +26,8 @@ namespace ViewModels
 
         public IEnumerable<SelectListItem> Categories { get; set; } 
             = new List<SelectListItem>();
+
+        public List<Guid> SelectedTagIds { get; set; } = new();
+        public List<TagOptionViewModel> Tags { get; set; } = new();
     }
 }

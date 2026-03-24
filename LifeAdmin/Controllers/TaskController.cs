@@ -19,13 +19,17 @@ namespace LifeAdmin.Web.Controllers
         private bool IsAdmin => User.IsInRole("Administrator");
         private string UserId => userManager.GetUserId(User)!;
 
+        private readonly ITagService tagService;
+
         public TasksController(
             ITaskService tasks,
             ICategoryService categories,
+            ITagService tagService, 
             UserManager<ApplicationUser> userManager)
         {
             this.tasks = tasks;
             this.categories = categories;
+            this.tagService = tagService; 
             this.userManager = userManager;
         }
 
@@ -97,7 +101,14 @@ namespace LifeAdmin.Web.Controllers
             var vm = new TaskFormViewModel
             {
                 Categories = await categories.GetAllForSelectAsync(),
-                Status = WorkStatus.Planned
+                Status = WorkStatus.Planned,
+
+                Tags = (await tagService.GetAllAsync())
+                    .Select(t => new TagOptionViewModel
+                    {
+                        Id = t.Id,
+                        Name = t.Name
+                    }).ToList()
             };
 
             return View(vm);
@@ -107,7 +118,7 @@ namespace LifeAdmin.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TaskFormViewModel vm)
         {
-            if (!await categories.ExistsAsync(vm.CategoryId))
+            if (!vm.CategoryId.HasValue || !await categories.ExistsAsync(vm.CategoryId.Value))
             {
                 ModelState.AddModelError(nameof(vm.CategoryId), Categories.InvalidCategory);
             }
@@ -115,6 +126,13 @@ namespace LifeAdmin.Web.Controllers
             if (!ModelState.IsValid)
             {
                 vm.Categories = await categories.GetAllForSelectAsync();
+                vm.Tags = (await tagService.GetAllAsync())
+                    .Select(t => new TagOptionViewModel
+                    {
+                        Id = t.Id,
+                        Name = t.Name
+                    }).ToList();
+
                 return View(vm);
             }
 
@@ -122,11 +140,19 @@ namespace LifeAdmin.Web.Controllers
             {
                 Title = vm.Title,
                 Description = vm.Description,
-                CategoryId = vm.CategoryId,
+                CategoryId = vm.CategoryId.Value,
                 Status = vm.Status,
                 OwnerId = UserId,
                 CreatedOn = DateTime.UtcNow
             };
+
+            foreach (var tagId in vm.SelectedTagIds)
+            {
+                entity.TaskItemTags.Add(new TaskItemTag
+                {
+                    TagId = tagId
+                });
+            }
 
             try
             {
@@ -138,10 +164,16 @@ namespace LifeAdmin.Web.Controllers
             {
                 TempData.SetError(Tasks.CreateFailed);
                 vm.Categories = await categories.GetAllForSelectAsync();
+                vm.Tags = (await tagService.GetAllAsync())
+                    .Select(t => new TagOptionViewModel
+                    {
+                        Id = t.Id,
+                        Name = t.Name
+                    }).ToList();
+
                 return View(vm);
             }
         }
-
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -205,7 +237,7 @@ namespace LifeAdmin.Web.Controllers
                 return NotFound();
             }
 
-            if (!await categories.ExistsAsync(vm.CategoryId))
+            if (!vm.CategoryId.HasValue || !await categories.ExistsAsync(vm.CategoryId.Value))
             {
                 ModelState.AddModelError(nameof(vm.CategoryId), Categories.InvalidCategory);
             }
@@ -213,12 +245,19 @@ namespace LifeAdmin.Web.Controllers
             if (!ModelState.IsValid)
             {
                 vm.Categories = await categories.GetAllForSelectAsync();
+                vm.Tags = (await tagService.GetAllAsync())
+                    .Select(t => new TagOptionViewModel
+                    {
+                        Id = t.Id,
+                        Name = t.Name
+                    }).ToList();
+
                 return View(vm);
             }
 
             task.Title = vm.Title;
             task.Description = vm.Description;
-            task.CategoryId = vm.CategoryId;
+            task.CategoryId = (Guid)vm.CategoryId;
             task.Status = vm.Status;
 
             try
@@ -229,8 +268,15 @@ namespace LifeAdmin.Web.Controllers
             }
             catch
             {
-                TempData.SetError(Tasks.UpdateFailed);
+                TempData.SetError(Tasks.CreateFailed);
                 vm.Categories = await categories.GetAllForSelectAsync();
+                vm.Tags = (await tagService.GetAllAsync())
+                    .Select(t => new TagOptionViewModel
+                    {
+                        Id = t.Id,
+                        Name = t.Name
+                    }).ToList();
+
                 return View(vm);
             }
         }

@@ -23,8 +23,12 @@ namespace LifeAdminModels.Models
         public Category Category { get; set; } = null!;
 
         [Required]
-        public string OwnerId { get; set; }
+        
+        public required string OwnerId { get; set; }
         public ApplicationUser Owner { get; set; } = null!;
+
+        public ICollection<TaskItemTag> TaskItemTags { get; set; }
+            = new HashSet<TaskItemTag>();
     }
 }
 
