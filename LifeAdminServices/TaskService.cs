@@ -19,6 +19,8 @@ namespace LifeAdminServices
             => await db.TaskItems
                 .Include(t => t.Category)
                 .Include(t => t.Owner)
+                .Include(t => t.TaskItemTags)
+                    .ThenInclude(tt => tt.Tag)
                 .OrderByDescending(t => t.CreatedOn)
                 .ToListAsync();
 
@@ -26,6 +28,8 @@ namespace LifeAdminServices
             => await db.TaskItems
                 .Include(t => t.Category)
                 .Include(t => t.Owner)
+                .Include(t => t.TaskItemTags)
+                    .ThenInclude(tt => tt.Tag)
                 .Where(t => t.OwnerId == userId)
                 .OrderByDescending(t => t.CreatedOn)
                 .ToListAsync();
@@ -35,6 +39,8 @@ namespace LifeAdminServices
                 .AsNoTracking()
                 .Include(t => t.Category)
                 .Include(t => t.Owner)
+                .Include(t => t.TaskItemTags)
+                    .ThenInclude(tt => tt.Tag)
                 .Where(t => t.OwnerId == userId)
                 .OrderByDescending(t => t.CreatedOn)
                 .ToListAsync();
@@ -43,12 +49,16 @@ namespace LifeAdminServices
             => await db.TaskItems
                 .Include(t => t.Category)
                 .Include(t => t.Owner)
+                .Include(t => t.TaskItemTags)
+                    .ThenInclude(tt => tt.Tag)
                 .FirstOrDefaultAsync(t => t.Id == id);
 
         public async Task<TaskItem?> GetByIdOwnedAsync(Guid id, string userId)
             => await db.TaskItems
                 .Include(t => t.Category)
                 .Include(t => t.Owner)
+                .Include(t => t.TaskItemTags)
+                    .ThenInclude(tt => tt.Tag)
                 .FirstOrDefaultAsync(t => t.Id == id && t.OwnerId == userId);
 
         public async Task AddAsync(TaskItem task)
@@ -85,6 +95,8 @@ namespace LifeAdminServices
                 .AsNoTracking()
                 .Include(t => t.Category)
                 .Include(t => t.Owner)
+                .Include(t => t.TaskItemTags)
+                    .ThenInclude(tt => tt.Tag)
                 .Where(t => t.OwnerId == userId);
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
@@ -119,7 +131,10 @@ namespace LifeAdminServices
                     Status = t.Status,
                     CreatedOn = t.CreatedOn,
                     OwnerUserName = t.Owner.UserName,
-                    OwnerEmail = t.Owner.Email
+                    OwnerEmail = t.Owner.Email,
+                    Tags = t.TaskItemTags
+                        .Select(tt => tt.Tag.Name)
+                        .ToList()
                 })
                 .ToListAsync();
 

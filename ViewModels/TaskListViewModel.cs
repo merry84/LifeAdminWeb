@@ -13,6 +13,7 @@ namespace ViewModels
         public DateTime CreatedOn { get; set; }
         public string? OwnerUserName { get; set; }
         public string? OwnerEmail { get; set; }
+        public List<string> Tags { get; set; } = new();
 
     }
 }

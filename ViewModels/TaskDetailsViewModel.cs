@@ -10,5 +10,6 @@ namespace ViewModels
         public string CategoryName { get; set; } = null!;
         public WorkStatus Status { get; set; }
         public DateTime CreatedOn { get; set; }
+        public List<string> Tags { get; set; } = new();
     }
 }

@@ -14,22 +14,21 @@ namespace LifeAdmin.Web.Controllers
     {
         private readonly ITaskService tasks;
         private readonly ICategoryService categories;
+        private readonly ITagService tagService;
         private readonly UserManager<ApplicationUser> userManager;
 
         private bool IsAdmin => User.IsInRole("Administrator");
         private string UserId => userManager.GetUserId(User)!;
 
-        private readonly ITagService tagService;
-
         public TasksController(
             ITaskService tasks,
             ICategoryService categories,
-            ITagService tagService, 
+            ITagService tagService,
             UserManager<ApplicationUser> userManager)
         {
             this.tasks = tasks;
             this.categories = categories;
-            this.tagService = tagService; 
+            this.tagService = tagService;
             this.userManager = userManager;
         }
 
@@ -70,7 +69,10 @@ namespace LifeAdmin.Web.Controllers
                     Status = t.Status,
                     CreatedOn = t.CreatedOn,
                     OwnerEmail = u?.Email,
-                    OwnerUserName = ownerName
+                    OwnerUserName = ownerName,
+                    Tags = t.TaskItemTags
+                        .Select(tt => tt.Tag.Name)
+                        .ToList()
                 };
             }).ToList();
 
@@ -102,13 +104,13 @@ namespace LifeAdmin.Web.Controllers
             {
                 Categories = await categories.GetAllForSelectAsync(),
                 Status = WorkStatus.Planned,
-
                 Tags = (await tagService.GetAllAsync())
                     .Select(t => new TagOptionViewModel
                     {
                         Id = t.Id,
                         Name = t.Name
-                    }).ToList()
+                    })
+                    .ToList()
             };
 
             return View(vm);
@@ -131,7 +133,8 @@ namespace LifeAdmin.Web.Controllers
                     {
                         Id = t.Id,
                         Name = t.Name
-                    }).ToList();
+                    })
+                    .ToList();
 
                 return View(vm);
             }
@@ -169,11 +172,13 @@ namespace LifeAdmin.Web.Controllers
                     {
                         Id = t.Id,
                         Name = t.Name
-                    }).ToList();
+                    })
+                    .ToList();
 
                 return View(vm);
             }
         }
+
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -193,7 +198,10 @@ namespace LifeAdmin.Web.Controllers
                 Description = task.Description,
                 CategoryName = task.Category.Name,
                 Status = task.Status,
-                CreatedOn = task.CreatedOn
+                CreatedOn = task.CreatedOn,
+                Tags = task.TaskItemTags
+                    .Select(tt => tt.Tag.Name)
+                    .ToList()
             };
 
             return View(vm);
@@ -218,7 +226,17 @@ namespace LifeAdmin.Web.Controllers
                 Description = task.Description,
                 CategoryId = task.CategoryId,
                 Status = task.Status,
-                Categories = await categories.GetAllForSelectAsync()
+                Categories = await categories.GetAllForSelectAsync(),
+                Tags = (await tagService.GetAllAsync())
+                    .Select(t => new TagOptionViewModel
+                    {
+                        Id = t.Id,
+                        Name = t.Name
+                    })
+                    .ToList(),
+                SelectedTagIds = task.TaskItemTags
+                    .Select(tt => tt.TagId)
+                    .ToList()
             };
 
             return View(vm);
@@ -250,15 +268,27 @@ namespace LifeAdmin.Web.Controllers
                     {
                         Id = t.Id,
                         Name = t.Name
-                    }).ToList();
+                    })
+                    .ToList();
 
                 return View(vm);
             }
 
             task.Title = vm.Title;
             task.Description = vm.Description;
-            task.CategoryId = (Guid)vm.CategoryId;
+            task.CategoryId = vm.CategoryId.Value;
             task.Status = vm.Status;
+
+            task.TaskItemTags.Clear();
+
+            foreach (var tagId in vm.SelectedTagIds)
+            {
+                task.TaskItemTags.Add(new TaskItemTag
+                {
+                    TaskItemId = task.Id,
+                    TagId = tagId
+                });
+            }
 
             try
             {
@@ -268,14 +298,15 @@ namespace LifeAdmin.Web.Controllers
             }
             catch
             {
-                TempData.SetError(Tasks.CreateFailed);
+                TempData.SetError(Tasks.UpdateFailed);
                 vm.Categories = await categories.GetAllForSelectAsync();
                 vm.Tags = (await tagService.GetAllAsync())
                     .Select(t => new TagOptionViewModel
                     {
                         Id = t.Id,
                         Name = t.Name
-                    }).ToList();
+                    })
+                    .ToList();
 
                 return View(vm);
             }

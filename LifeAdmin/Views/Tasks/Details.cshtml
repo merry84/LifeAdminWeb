@@ -41,7 +41,18 @@
                     @StatusText(Model.Status)
                 </span>
             </div>
-
+            @if (Model.Tags.Any())
+            {
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Tags</label>
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <span class="badge bg-secondary">@tag</span>
+                        }
+                    </div>
+                </div>
+            }
 
             <dt class="col-sm-3">Created</dt>
             <dd class="col-sm-9">@Model.CreatedOn.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
