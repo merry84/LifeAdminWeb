@@ -10,6 +10,8 @@
             public const int EmailMaxLength = 100;
             public const int PasswordMaxLength = 100;
             public const int PasswordMinLength = 6;
+            public const int ProfileImageUrlMaxLength = 250;
+            public const int BioMaxLength = 500;
         }
 
         public static class TaskItem

@@ -17,6 +17,14 @@ namespace LifeAdminModels.Models
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;
 
+        [MaxLength(ProfileImageUrlMaxLength)]
+        public string? ProfileImageUrl { get; set; }
+
+        [MaxLength(BioMaxLength)]
+        public string? Bio { get; set; }
+
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+
         public ICollection<TaskItem> Tasks { get; set; } = new HashSet<TaskItem>();
         public ICollection<Note> Notes { get; set; } = new HashSet<Note>();
 
