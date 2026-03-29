@@ -1,4 +1,4 @@
-﻿namespace ViewModels
+﻿namespace ViewModels.NotesViewModels
 {
     public class NoteQueryViewModel
     {

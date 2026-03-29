@@ -1,4 +1,4 @@
-﻿namespace ViewModels
+﻿namespace ViewModels.DocumentViewModels
 {
     public class DocumentDeleteViewModel
     {

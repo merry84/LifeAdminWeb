@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static GCommon.DataConstants.CategoryFormViewModel;
 
-namespace ViewModels
+namespace ViewModels.CategoriesViewModels
 {
     public class CategoryFormViewModel
     {

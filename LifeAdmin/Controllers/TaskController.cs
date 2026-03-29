@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Migrations;
 using ViewModels;
+using ViewModels.TasksViewModels;
 using static GCommon.NotificationMessages;
 
 namespace LifeAdmin.Web.Controllers

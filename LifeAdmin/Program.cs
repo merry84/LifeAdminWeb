@@ -37,6 +37,7 @@ builder.Services.AddScoped<INotesService, NotesService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 var app = builder.Build();

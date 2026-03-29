@@ -1,15 +1,19 @@
-﻿using LifeAdminModels.Models;
+﻿
+using LifeAdminModels.Models;
 
-namespace ViewModels
+namespace ViewModels.TasksViewModels
 {
-    public class TaskDetailsViewModel
+    public class TaskListViewModel
     {
         public Guid Id { get; set; }
         public string Title { get; set; } = null!;
-        public string? Description { get; set; }
         public string CategoryName { get; set; } = null!;
         public WorkStatus Status { get; set; }
+
         public DateTime CreatedOn { get; set; }
+        public string? OwnerUserName { get; set; }
+        public string? OwnerEmail { get; set; }
         public List<string> Tags { get; set; } = new();
+
     }
 }

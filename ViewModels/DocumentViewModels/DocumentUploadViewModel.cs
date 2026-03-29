@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using static GCommon.DataConstants.Document;
 
-namespace ViewModels
+namespace ViewModels.DocumentViewModels
 {
     public class DocumentUploadViewModel
     {

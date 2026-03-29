@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static GCommon.DataConstants.ProfileViewModel;
-namespace ViewModels
+namespace ViewModels.ProfilesViewModels
 {
     public class ProfileViewModel
     {

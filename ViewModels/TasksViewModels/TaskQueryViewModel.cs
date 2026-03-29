@@ -1,4 +1,4 @@
-﻿namespace ViewModels
+﻿namespace ViewModels.TasksViewModels
 {
     public class TaskQueryViewModel
     {

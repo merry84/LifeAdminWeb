@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using LifeAdminModels.Models;
-using ViewModels.Profile;
 using GCommon;
+using ViewModels.ProfilesViewModels;
 
 namespace LifeAdmin.Web.Controllers
 {

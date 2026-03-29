@@ -1,4 +1,5 @@
-﻿@model ViewModels.ProfileViewModel
+﻿@using ViewModels.ProfilesViewModels
+@model ProfileViewModel
 
 @{
     ViewData["Title"] = "My Profile";
@@ -10,10 +11,10 @@
             <div class="d-flex align-items-center gap-4">
                 <div>
                     <img src="@(string.IsNullOrWhiteSpace(Model.ProfileImageUrl)
-                                                 ? "https://via.placeholder.com/150"
-                                                 : Model.ProfileImageUrl)"
+                             ? "https://ui-avatars.com/api/?name=" + Uri.EscapeDataString(Model.DisplayName ?? Model.Email) + "&background=6366f1&color=fff&size=128"
+                             : Model.ProfileImageUrl)"
                          alt="Profile picture"
-                         class="rounded-circle"
+                         class="rounded-circle shadow-sm border"
                          style="width: 120px; height: 120px; object-fit: cover;" />
                 </div>
 

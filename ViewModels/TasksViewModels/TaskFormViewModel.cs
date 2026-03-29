@@ -4,7 +4,7 @@ using LifeAdminModels.Models;
 
 using static GCommon.DataConstants.TaskFormViewModel;
 using static GCommon.ValidationMessages;
-namespace ViewModels
+namespace ViewModels.TasksViewModels
 {
     public class TaskFormViewModel
     {

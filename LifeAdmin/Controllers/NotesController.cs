@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ViewModels;
+using ViewModels.NotesViewModels;
 using static GCommon.NotificationMessages;
 
 namespace LifeAdmin.Web.Controllers

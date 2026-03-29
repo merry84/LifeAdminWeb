@@ -4,7 +4,7 @@ using LifeAdminServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ViewModels;
+using ViewModels.DocumentViewModels;
 using static GCommon.DataConstants.Document;
 
 namespace LifeAdmin.Web.Controllers

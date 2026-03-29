@@ -1,8 +1,7 @@
 ﻿using LifeAdminData;
 using LifeAdminServices.Contracts;
 using Microsoft.EntityFrameworkCore;
-using ViewModels;
-using ViewModels.Profile;
+using ViewModels.ProfilesViewModels;
 
 namespace LifeAdminServices
 {

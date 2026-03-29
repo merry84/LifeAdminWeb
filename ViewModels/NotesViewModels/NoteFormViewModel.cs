@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static GCommon.DataConstants.Note;
-namespace ViewModels
+namespace ViewModels.NotesViewModels
 {
     public class NoteFormViewModel
     {

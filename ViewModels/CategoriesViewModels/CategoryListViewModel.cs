@@ -1,4 +1,4 @@
-﻿namespace ViewModels
+﻿namespace ViewModels.CategoriesViewModels
 {
     public class CategoryListViewModel
     {

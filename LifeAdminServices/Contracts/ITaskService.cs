@@ -1,5 +1,5 @@
 ﻿using LifeAdminModels.Models;
-using ViewModels;
+using ViewModels.TasksViewModels;
 
 namespace LifeAdminServices.Contracts
 {

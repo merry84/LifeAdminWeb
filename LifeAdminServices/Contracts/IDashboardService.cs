@@ -1,4 +1,4 @@
-﻿using ViewModels;
+﻿using ViewModels.DashboardViewModels;
 
 namespace LifeAdminServices.Contracts
 {

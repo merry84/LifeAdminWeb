@@ -4,6 +4,7 @@ using LifeAdminServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ViewModels;
+using ViewModels.CategoriesViewModels;
 
 namespace LifeAdmin.Web.Controllers
 {

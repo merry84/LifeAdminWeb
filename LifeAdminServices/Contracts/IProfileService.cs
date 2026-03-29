@@ -1,7 +1,4 @@
-﻿
-
-using ViewModels;
-using ViewModels.Profile;
+﻿using ViewModels.ProfilesViewModels;
 
 namespace LifeAdminServices.Contracts
 {

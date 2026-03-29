@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ViewModels.Admin.UserViewModel>
+
+@{
+    ViewData["Title"] = "Users Management";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Users</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Created</th>
+                <th>Role</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@(user.DisplayName ?? $"{user.FirstName} {user.LastName}")</td>
+                    <td>@user.CreatedOn.ToString("dd.MM.yyyy")</td>
+                    <td>
+                        @if (user.IsAdmin)
+                        {
+                            <span class="badge bg-success">Admin</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">User</span>
+                        }
+                    </td>
+                    <td>
+                        <form asp-area="Admin"
+                              asp-controller="Users"
+                              asp-action="ToggleAdmin"
+                              method="post">
+                            <input type="hidden" name="id" value="@user.Id" />
+
+                            <button class="btn btn-sm btn-outline-primary">
+                                Toggle Role
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

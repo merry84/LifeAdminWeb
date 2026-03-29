@@ -1,5 +1,6 @@
-﻿@model IEnumerable<ViewModels.TaskListViewModel>
+﻿@model IEnumerable<TaskListViewModel>
 @using LifeAdminModels.Models
+@using ViewModels.TasksViewModels
 
 @functions {
     string StatusBadgeClass(WorkStatus status) => status switch

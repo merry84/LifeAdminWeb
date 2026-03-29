@@ -2,7 +2,7 @@
 using LifeAdminModels.Models;
 using LifeAdminServices.Contracts;
 using Microsoft.EntityFrameworkCore;
-using ViewModels;
+using ViewModels.DocumentViewModels;
 
 namespace LifeAdminServices
 {

@@ -1,6 +1,6 @@
 ﻿using LifeAdminModels.Models;
 
-namespace ViewModels
+namespace ViewModels.TasksViewModels
 {
     public class TaskDeleteViewModel
     {
