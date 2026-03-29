@@ -1,5 +1,7 @@
 ﻿using LifeAdmin.Web.Infrastructure;
 using LifeAdminModels.Models;
+using LifeAdminServices;
+using LifeAdminServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +13,13 @@ namespace LifeAdmin.Web.Controllers
     public class UsersController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUserService userService;
 
-        public UsersController(UserManager<ApplicationUser> userManager)
-            => this.userManager = userManager;
+        public UsersController(UserManager<ApplicationUser> userManager, IUserService userService)
+        {
+            this.userManager = userManager;
+            this.userService = userService;
+        }
 
         [HttpGet]
         public async Task<IActionResult> Profile()
@@ -72,6 +78,17 @@ namespace LifeAdmin.Web.Controllers
 
             TempData.SetSuccess("Profile updated successfully!");
             return RedirectToAction(nameof(Profile));
+        }
+        public async Task<IActionResult> Details(string id)
+        {
+            var model = await userService.GetDetailsAsync(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
         }
     }
 }

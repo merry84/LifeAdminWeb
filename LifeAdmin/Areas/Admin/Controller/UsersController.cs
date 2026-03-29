@@ -21,6 +21,18 @@ namespace LifeAdmin.Web.Areas.Admin.Controllers
             return View(users);
         }
 
+     
+        public async Task<IActionResult> Details(string id)
+        {
+            var model = await userService.GetDetailsAsync(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
         [HttpPost]
         public async Task<IActionResult> ToggleAdmin(string id)
         {

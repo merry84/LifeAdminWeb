@@ -1,0 +1,117 @@
+﻿@model ViewModels.Admin.UserDetailsViewModel
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <div class="d-flex align-items-center gap-4 mb-4">
+                <img src="@(string.IsNullOrWhiteSpace(Model.ProfileImageUrl)
+                                         ? Url.Content("~/images/default-avatar.png")
+                                         : Model.ProfileImageUrl)"
+                     alt="Profile picture"
+                     class="rounded-circle border shadow-sm"
+                     style="width: 110px; height: 110px; object-fit: cover;" />
+
+                <div>
+                    <h2 class="mb-1">
+                        @(string.IsNullOrWhiteSpace(Model.DisplayName)
+                                                ? $"{Model.FirstName} {Model.LastName}".Trim()
+                                                : Model.DisplayName)
+                    </h2>
+
+                    <p class="text-muted mb-1">@Model.Email</p>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.UserName) &&
+                                        !string.Equals(Model.UserName, Model.Email, StringComparison.OrdinalIgnoreCase))
+                    {
+                        <p class="text-muted mb-1">@Model.UserName</p>
+                    }
+
+                    <div class="mt-2">
+                        @if (Model.IsAdmin)
+                        {
+                            <span class="badge bg-success">Administrator</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">User</span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <p><strong>First Name:</strong> @(string.IsNullOrWhiteSpace(Model.FirstName) ? "Not provided" : Model.FirstName)</p>
+                    <p><strong>Last Name:</strong> @(string.IsNullOrWhiteSpace(Model.LastName) ? "Not provided" : Model.LastName)</p>
+                    <p><strong>Phone Number:</strong> @(string.IsNullOrWhiteSpace(Model.PhoneNumber) ? "Not provided" : Model.PhoneNumber)</p>
+                    <p><strong>Created On:</strong> @(Model.CreatedOn == default ? "Not available" : Model.CreatedOn.ToLocalTime().ToString("dd.MM.yyyy"))</p>
+                </div>
+
+                <div class="col-md-6">
+                    <p><strong>Bio:</strong></p>
+                    <p class="text-muted">
+                        @(string.IsNullOrWhiteSpace(Model.Bio) ? "No bio added yet." : Model.Bio)
+                    </p>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row g-3 text-center">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h3 class="mb-1">@Model.TasksCount</h3>
+                            <p class="text-muted mb-0">Tasks</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h3 class="mb-1">@Model.NotesCount</h3>
+                            <p class="text-muted mb-0">Notes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h3 class="mb-1">@Model.DocumentsCount</h3>
+                            <p class="text-muted mb-0">Documents</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+                <a asp-area="Admin"
+                   asp-controller="Users"
+                   asp-action="All"
+                   class="btn btn-outline-secondary">
+                    Back to Users
+                </a>
+
+                <form asp-area="Admin"
+                      asp-controller="Users"
+                      asp-action="ToggleAdmin"
+                      method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.Id" />
+
+                    <button type="submit" class="btn btn-primary">
+                        @(Model.IsAdmin ? "Remove Admin Role" : "Make Administrator")
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

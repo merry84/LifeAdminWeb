@@ -61,5 +61,40 @@ namespace LifeAdminServices
 
             return true;
         }
+        public async Task<UserDetailsViewModel?> GetDetailsAsync(string userId)
+        {
+            var user = await db.Users
+                .Include(u => u.Tasks)
+                .Include(u => u.Notes)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var documentsCount = await db.Documents
+                .CountAsync(d => d.OwnerId == userId);
+
+            var isAdmin = await userManager.IsInRoleAsync(user, "Administrator");
+
+            return new UserDetailsViewModel
+            {
+                Id = user.Id,
+                Email = user.Email ?? string.Empty,
+                UserName = user.UserName,
+                DisplayName = user.DisplayName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                Bio = user.Bio,
+                ProfileImageUrl = user.ProfileImageUrl,
+                CreatedOn = user.CreatedOn,
+                IsAdmin = isAdmin,
+                TasksCount = user.Tasks.Count,
+                NotesCount = user.Notes.Count,
+                DocumentsCount = documentsCount
+            };
+        }
     }
 }

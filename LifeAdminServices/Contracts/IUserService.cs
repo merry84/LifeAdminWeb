@@ -6,5 +6,6 @@ namespace LifeAdminServices.Contracts
     {
         Task<IEnumerable<UserViewModel>> GetAllAsync();
         Task<bool> ToggleAdminRoleAsync(string userId);
+        Task<UserDetailsViewModel?> GetDetailsAsync(string userId);
     }
 }

@@ -7,47 +7,70 @@
 <div class="container py-4">
     <h2 class="mb-4">Users</h2>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Created</th>
-                <th>Role</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
-            {
-                <tr>
-                    <td>@user.Email</td>
-                    <td>@(user.DisplayName ?? $"{user.FirstName} {user.LastName}")</td>
-                    <td>@user.CreatedOn.ToString("dd.MM.yyyy")</td>
-                    <td>
-                        @if (user.IsAdmin)
-                        {
-                            <span class="badge bg-success">Admin</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-secondary">User</span>
-                        }
-                    </td>
-                    <td>
-                        <form asp-area="Admin"
-                              asp-controller="Users"
-                              asp-action="ToggleAdmin"
-                              method="post">
-                            <input type="hidden" name="id" value="@user.Id" />
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Created</th>
+                        <th>Role</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.Email</td>
+                            <td>
+                                @(string.IsNullOrWhiteSpace(user.DisplayName)
+                                                            ? $"{user.FirstName} {user.LastName}".Trim()
+                                                            : user.DisplayName)
+                                                                           </td>
+                                                                           <td>
+                                @(user.CreatedOn == default
+                                                            ? "N/A"
+                                                            : user.CreatedOn.ToString("dd.MM.yyyy"))
+                        </td>
+                        <td>
+                            @if (user.IsAdmin)
+                                {
+                                    <span class="badge bg-success">Admin</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">User</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a asp-area="Admin"
+                                       asp-controller="Users"
+                                       asp-action="Details"
+                                       asp-route-id="@user.Id"
+                                       class="btn btn-sm btn-outline-secondary">
+                                        Details
+                                    </a>
 
-                            <button class="btn btn-sm btn-outline-primary">
-                                Toggle Role
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                                    <form asp-area="Admin"
+                                          asp-controller="Users"
+                                          asp-action="ToggleAdmin"
+                                          method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@user.Id" />
+
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                                            Toggle Role
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
