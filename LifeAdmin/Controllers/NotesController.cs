@@ -195,5 +195,38 @@ namespace LifeAdmin.Web.Controllers
 
             return RedirectToAction(nameof(All));
         }
+        [Authorize(Roles = "Administrator")]
+        [HttpGet]
+        public async Task<IActionResult> Deleted()
+        {
+            var deletedNotes = await notes.GetDeletedAsync();
+
+            var model = deletedNotes.Select(n => new NoteListItemViewModel
+            {
+                Id = n.Id,
+                Title = n.Title,
+                CreatedOn = n.CreatedOn
+            }).ToList();
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            var note = await notes.GetDeletedByIdAsync(id);
+
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            await notes.RestoreAsync(note);
+            TempData.SetSuccess("Note restored successfully.");
+
+            return RedirectToAction(nameof(Deleted));
+        }
     }
 }

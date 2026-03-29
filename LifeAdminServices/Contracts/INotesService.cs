@@ -22,5 +22,9 @@ namespace LifeAdminServices.Contracts
         Task UpdateAsync(Note note);
 
         Task DeleteAsync(Note note);
+
+        Task<IEnumerable<Note>> GetDeletedAsync();
+        Task<Note?> GetDeletedByIdAsync(Guid id);
+        Task RestoreAsync(Note note);
     }
 }

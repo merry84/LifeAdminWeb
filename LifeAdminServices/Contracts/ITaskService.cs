@@ -18,6 +18,11 @@ namespace LifeAdminServices.Contracts
         Task<IEnumerable<TaskItem>> GetMineAsync(string userId);
         Task<TaskItem?> GetByIdAsync(Guid id);
         Task<TaskItem?> GetByIdOwnedAsync(Guid id, string userId);
+
+        Task<IEnumerable<TaskItem>> GetDeletedAsync();
+        Task<TaskItem?> GetDeletedByIdAsync(Guid id);
+        Task RestoreAsync(TaskItem task);
+
         Task AddAsync(TaskItem task);
         Task UpdateAsync(TaskItem task);
         Task DeleteAsync(TaskItem task);

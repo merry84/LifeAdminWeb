@@ -19,5 +19,7 @@ namespace LifeAdminModels.Models
         public string OwnerId { get; set; } = null!;
 
         public ApplicationUser Owner { get; set; } = null!;
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedOn { get; set; }
     }
 }

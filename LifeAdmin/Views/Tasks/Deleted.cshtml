@@ -1,0 +1,92 @@
+﻿@model IEnumerable<ViewModels.TaskListViewModel>
+@using LifeAdminModels.Models
+
+@functions {
+    string StatusBadgeClass(WorkStatus status) => status switch
+    {
+        WorkStatus.Planned => "bg-secondary",
+        WorkStatus.InProgress => "bg-primary",
+        WorkStatus.Done => "bg-success",
+        _ => "bg-dark"
+    };
+
+    string StatusText(WorkStatus status) => status switch
+    {
+        WorkStatus.Planned => "Planned",
+        WorkStatus.InProgress => "In Progress",
+        WorkStatus.Done => "Done",
+        _ => status.ToString()
+    };
+}
+
+@{
+    ViewData["Title"] = "Deleted Tasks";
+}
+
+<h2 class="mb-3">Deleted Tasks</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No deleted tasks.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Tags</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Owner</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var task in Model)
+                {
+                    <tr>
+                        <td>@task.Title</td>
+                        <td>@task.CategoryName</td>
+                        <td>
+                            @if (task.Tags.Any())
+                            {
+                                <div class="d-flex flex-wrap gap-1">
+                                    @foreach (var tag in task.Tags)
+                                    {
+                                        <span class="badge bg-secondary">@tag</span>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-muted">No tags</span>
+                            }
+                        </td>
+                        <td>
+                            <span class="badge @StatusBadgeClass(task.Status)">
+                                @StatusText(task.Status)
+                            </span>
+                        </td>
+                        <td>@task.CreatedOn.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>
+                            <div>@task.OwnerUserName</div>
+                            <div class="text-muted small">@task.OwnerEmail</div>
+                        </td>
+                        <td class="text-end">
+                            <form asp-action="Restore" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@task.Id" />
+                                <button type="submit" class="btn btn-sm btn-success">
+                                    Restore
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -61,6 +61,33 @@ namespace LifeAdminServices
                     .ThenInclude(tt => tt.Tag)
                 .FirstOrDefaultAsync(t => t.Id == id && t.OwnerId == userId);
 
+        public async Task<IEnumerable<TaskItem>> GetDeletedAsync()
+            => await db.TaskItems
+                .IgnoreQueryFilters()
+                .Include(t => t.Category)
+                .Include(t => t.Owner)
+                .Include(t => t.TaskItemTags)
+                    .ThenInclude(tt => tt.Tag)
+                .Where(t => t.IsDeleted)
+                .OrderByDescending(t => t.DeletedOn)
+                .ToListAsync();
+
+        public async Task<TaskItem?> GetDeletedByIdAsync(Guid id)
+            => await db.TaskItems
+                .IgnoreQueryFilters()
+                .Include(t => t.Category)
+                .Include(t => t.Owner)
+                .Include(t => t.TaskItemTags)
+                    .ThenInclude(tt => tt.Tag)
+                .FirstOrDefaultAsync(t => t.Id == id && t.IsDeleted);
+
+        public async Task RestoreAsync(TaskItem task)
+        {
+            task.IsDeleted = false;
+            task.DeletedOn = null;
+            await db.SaveChangesAsync();
+        }
+
         public async Task AddAsync(TaskItem task)
         {
             await db.TaskItems.AddAsync(task);
@@ -75,7 +102,8 @@ namespace LifeAdminServices
 
         public async Task DeleteAsync(TaskItem task)
         {
-            db.TaskItems.Remove(task);
+            task.IsDeleted = true;
+            task.DeletedOn = DateTime.UtcNow;
             await db.SaveChangesAsync();
         }
 

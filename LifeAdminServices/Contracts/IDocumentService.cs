@@ -11,5 +11,8 @@ namespace LifeAdminServices.Contracts
         Task<Document?> GetByIdOwnedAsync(Guid id, string userId);
         Task AddAsync(Document document);
         Task DeleteAsync(Document document);
+        Task<IEnumerable<DocumentListViewModel>> GetDeletedAsync();
+        Task<Document?> GetDeletedByIdAsync(Guid id);
+        Task RestoreAsync(Document document);
     }
 }

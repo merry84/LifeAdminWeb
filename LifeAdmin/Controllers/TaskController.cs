@@ -4,6 +4,7 @@ using LifeAdminServices.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Migrations;
 using ViewModels;
 using static GCommon.NotificationMessages;
 
@@ -360,6 +361,47 @@ namespace LifeAdmin.Web.Controllers
             }
 
             return RedirectToAction(nameof(All));
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpGet]
+        public async Task<IActionResult> Deleted()
+        {
+            var deletedTasks = await tasks.GetDeletedAsync();
+
+            var model = deletedTasks.Select(t => new TaskListViewModel
+            {
+                Id = t.Id,
+                Title = t.Title,
+                CategoryName = t.Category.Name,
+                Status = t.Status,
+                CreatedOn = t.CreatedOn,
+                OwnerUserName = !string.IsNullOrWhiteSpace(t.Owner.DisplayName)
+                    ? t.Owner.DisplayName
+                    : t.Owner.UserName,
+                OwnerEmail = t.Owner.Email,
+                Tags = t.TaskItemTags.Select(tt => tt.Tag.Name).ToList()
+            }).ToList();
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            var task = await tasks.GetDeletedByIdAsync(id);
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            await tasks.RestoreAsync(task);
+            TempData.SetSuccess("Task restored successfully.");
+
+            return RedirectToAction(nameof(Deleted));
         }
     }
 }

@@ -98,8 +98,29 @@ namespace LifeAdminServices
 
         public async Task DeleteAsync(Note note)
         {
-            db.Notes.Remove(note);
+            note.IsDeleted = true;
+            note.DeletedOn = DateTime.UtcNow;
             await db.SaveChangesAsync();
         }
+        public async Task RestoreAsync(Note note)
+        {
+            note.IsDeleted = false;
+            note.DeletedOn = null;
+            await db.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<Note>> GetDeletedAsync()
+           => await db.Notes
+            .IgnoreQueryFilters()
+            .Include(n => n.Owner)
+            .Where(n => n.IsDeleted)
+            .OrderByDescending(n => n.DeletedOn)
+            .ToListAsync();
+        public async Task<Note?> GetDeletedByIdAsync(Guid id)
+            => await db.Notes
+            .IgnoreQueryFilters()
+            .Include(n => n.Owner)
+            .FirstOrDefaultAsync(n => n.Id == id && n.IsDeleted);        
+       
     }
 }
+

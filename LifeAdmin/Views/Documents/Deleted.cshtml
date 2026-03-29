@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ViewModels.DocumentListViewModel>
+
+@{
+    ViewData["Title"] = "Deleted Documents";
+}
+
+<h2 class="mb-3">Deleted Documents</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No deleted documents.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>File</th>
+                <th>Owner</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var doc in Model)
+            {
+                <tr>
+                    <td>@doc.Title</td>
+                    <td>@doc.FileName</td>
+                    <td>@doc.OwnerUserName</td>
+                    <td class="text-end">
+                        <form asp-action="Restore" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@doc.Id" />
+                            <button type="submit" class="btn btn-sm btn-success">Restore</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

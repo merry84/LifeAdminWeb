@@ -62,7 +62,39 @@ namespace LifeAdminServices
 
         public async Task DeleteAsync(Document document)
         {
-            db.Documents.Remove(document);
+            document.IsDeleted = false;
+            document.DeletedOn = null;
+            await db.SaveChangesAsync();
+        }
+        
+
+        public async Task<IEnumerable<DocumentListViewModel>> GetDeletedAsync()
+             => await db.Documents
+                .IgnoreQueryFilters()
+                .Include(d => d.Owner)
+                .Where(d => d.IsDeleted)
+                .OrderByDescending(d => d.DeletedOn)
+                .Select(d => new DocumentListViewModel
+                {
+                    Id = d.Id,
+                    Title = d.Title,
+                    FileName = d.FileName,
+                    ContentType = d.ContentType,
+                    FileSize = d.FileSize,
+                    UploadedOn = d.UploadedOn,
+                    OwnerUserName = d.Owner.UserName
+                })
+                .ToListAsync();
+
+        public async Task<Document?> GetDeletedByIdAsync(Guid id)
+            => await db.Documents
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(d => d.Id == id && d.IsDeleted);
+
+        public async Task RestoreAsync(Document document)
+        {
+            document.IsDeleted = false;
+            document.DeletedOn = null;
             await db.SaveChangesAsync();
         }
     }

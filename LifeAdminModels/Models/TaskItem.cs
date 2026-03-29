@@ -29,6 +29,10 @@ namespace LifeAdminModels.Models
 
         public ICollection<TaskItemTag> TaskItemTags { get; set; }
             = new HashSet<TaskItemTag>();
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
     }
 }
 

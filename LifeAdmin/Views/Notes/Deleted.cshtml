@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ViewModels.NoteListItemViewModel>
+
+@{
+    ViewData["Title"] = "Deleted Notes";
+}
+
+<h2 class="mb-3">Deleted Notes</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No deleted notes.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Created On</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var note in Model)
+            {
+                <tr>
+                    <td>@note.Title</td>
+                    <td>@note.CreatedOn.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+                    <td class="text-end">
+                        <form asp-action="Restore" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@note.Id" />
+                            <button type="submit" class="btn btn-sm btn-success">Restore</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -42,11 +42,16 @@ namespace LifeAdminData
                 .HasForeignKey(n => n.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Note>()
+                .HasQueryFilter(n => !n.IsDeleted);
+
             builder.Entity<Document>()
                 .HasOne(d => d.Owner)
                 .WithMany(u => u.Documents)
                 .HasForeignKey(d => d.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Document>()
+                .HasQueryFilter(d => !d.IsDeleted);
 
             builder.Entity<TaskItemTag>()
                 .HasKey(tt => new { tt.TaskItemId, tt.TagId });
@@ -60,6 +65,21 @@ namespace LifeAdminData
                 .HasOne(tt => tt.Tag)
                 .WithMany(t => t.TaskItems)
                 .HasForeignKey(tt => tt.TagId);
+
+            builder.Entity<TaskItem>()
+                .HasOne(t => t.Owner)
+                .WithMany(u => u.Tasks)
+                .HasForeignKey(t => t.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<TaskItem>()
+                .HasOne(t => t.Category)
+                .WithMany(c => c.Tasks)
+                .HasForeignKey(t => t.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<TaskItem>()
+                .HasQueryFilter(t => !t.IsDeleted);
         }
     }
 }
