@@ -4,6 +4,11 @@ namespace ViewModels
 {
     public class ProfileViewModel
     {
+        public string Id { get; set; } = null!;
+
+        [Display(Name = "Username")]
+        public string UserName { get; set; } = null!;
+
         [Required]
         [StringLength(FirstNameMaxLength)]
         [Display(Name = "First Name")]
@@ -18,7 +23,22 @@ namespace ViewModels
         [Display(Name = "Display name")]
         public string? DisplayName { get; set; }
 
+
         [EmailAddress]
         public string Email { get; set; } = null!;
+
+        [Display(Name = "Profile Image URL")]
+        [StringLength(ProfileImageUrlMaxLength)]
+        public string? ProfileImageUrl { get; set; }
+
+        [Display(Name = "Bio")]
+        [StringLength(BioMaxLength)]
+        public string? Bio { get; set; }
+
+
+        [Display(Name = "Phone Number")]
+        public string? PhoneNumber { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }

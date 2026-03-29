@@ -53,7 +53,9 @@ namespace LifeAdmin.Web.Infrastructure
                     Email = adminEmail,
                     EmailConfirmed = true,
                     FirstName = "Admin",
-                    LastName = "User"
+                    LastName = "User",
+                    DisplayName = "Admin User",
+                    CreatedOn = DateTime.UtcNow
                 };
 
                 var result = await userManager.CreateAsync(user, adminPassword);
@@ -65,6 +67,25 @@ namespace LifeAdmin.Web.Infrastructure
             }
             else
             {
+                var shouldUpdate = false;
+
+                if (user.CreatedOn == default)
+                {
+                    user.CreatedOn = DateTime.UtcNow;
+                    shouldUpdate = true;
+                }
+
+                if (string.IsNullOrWhiteSpace(user.DisplayName))
+                {
+                    user.DisplayName = "Admin User";
+                    shouldUpdate = true;
+                }
+
+                if (shouldUpdate)
+                {
+                    await userManager.UpdateAsync(user);
+                }
+
                 if (!await userManager.IsInRoleAsync(user, "Administrator"))
                 {
                     await userManager.AddToRoleAsync(user, "Administrator");

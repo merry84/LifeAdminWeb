@@ -53,6 +53,8 @@
             public const int FirstNameMaxLength = 40;
             public const int LastNameMaxLength = 40;
             public const int DisplayNameMaxLength = 40;
+            public const int BioMaxLength = 500;
+            public const int ProfileImageUrlMaxLength = 250;
         }
         public static class Document
         {
