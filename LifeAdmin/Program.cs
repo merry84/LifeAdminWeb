@@ -21,6 +21,21 @@ builder.Services
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.AddAuthentication()
+    .AddGitHub(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:GitHub:ClientId"]
+            ?? throw new InvalidOperationException("GitHub ClientId is missing.");
+        options.ClientSecret = builder.Configuration["Authentication:GitHub:ClientSecret"]
+            ?? throw new InvalidOperationException("GitHub ClientSecret is missing.");
+    })
+    .AddFacebook(options =>
+    {
+        options.AppId = builder.Configuration["Authentication:Facebook:AppId"]
+            ?? throw new InvalidOperationException("Facebook AppId is missing.");
+        options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"]
+            ?? throw new InvalidOperationException("Facebook AppSecret is missing.");
+    });
 
 builder.Services.AddControllersWithViews(
     opt =>

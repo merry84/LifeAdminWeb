@@ -57,36 +57,36 @@
                         <button id="login-submit" type="submit" class="btn modern-primary-btn w-100">
                             Log in
                         </button>
-
-                        @if ((Model.ExternalLogins?.Count ?? 0) > 0)
-                        {
-                            <div class="modern-divider">
-                                <span>or continue with</span>
-                            </div>
-
-                            <form id="external-account"
-                                  asp-page="./ExternalLogin"
-                                  asp-route-returnUrl="@Model.ReturnUrl"
-                                  method="post"
-                                  class="modern-social-grid">
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit"
-                                            class="btn modern-social-btn"
-                                            name="provider"
-                                            value="@provider.Name"
-                                            title="Log in using your @provider.DisplayName account">
-                                        @provider.DisplayName
-                                    </button>
-                                }
-                            </form>
-                        }
-
-                        <div class="modern-auth-footer">
-                            <span class="text-muted">Don’t have an account?</span>
-                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create one</a>
-                        </div>
                     </form>
+
+                    @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+                    {
+                        <div class="modern-divider">
+                            <span>or continue with</span>
+                        </div>
+
+                        <form id="external-account"
+                              asp-page="./ExternalLogin"
+                              asp-route-returnUrl="@Model.ReturnUrl"
+                              method="post"
+                              class="modern-social-grid">
+                            @foreach (var provider in Model.ExternalLogins!)
+                            {
+                                <button type="submit"
+                                        class="btn modern-social-btn"
+                                        name="provider"
+                                        value="@provider.Name"
+                                        title="Log in using your @provider.DisplayName account">
+                                    Continue with @provider.DisplayName
+                                </button>
+                            }
+                        </form>
+                    }
+
+                    <div class="modern-auth-footer">
+                        <span class="text-muted">Don’t have an account?</span>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create one</a>
+                    </div>
                 </div>
             </div>
 
