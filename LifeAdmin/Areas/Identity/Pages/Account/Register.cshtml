@@ -1,65 +1,145 @@
 ﻿@page
 @model RegisterModel
+
 @{
     ViewData["Title"] = "Register";
 }
 
-<div class="row justify-content-center">
-    <div class="col-12 col-sm-10 col-md-6 col-lg-5">
-        <h1 class="mb-3">@ViewData["Title"]</h1>
+<div class="modern-auth-page">
+    <div class="modern-auth-shell">
+        <div class="row g-0">
+            <div class="col-xl-5 col-lg-6">
+                <div class="modern-auth-form-panel">
+                    <div class="modern-auth-top">
+                        <span class="modern-auth-badge">Create account</span>
+                        <h1 class="modern-auth-title">Join LifeAdmin</h1>
+                        <p class="modern-auth-subtitle">
+                            Set up your profile and start organizing tasks, notes and documents in one modern workspace.
+                        </p>
+                    </div>
 
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2 class="h5 text-muted mb-3">Create a new account</h2>
-            <hr />
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="modern-auth-form">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
 
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="modern-field">
+                                    <label asp-for="Input.FirstName" class="modern-label"></label>
+                                    <input asp-for="Input.FirstName" class="form-control modern-input" placeholder="First name" />
+                                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                </div>
+                            </div>
 
-            <div class="row g-2">
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.FirstName" class="form-control" />
-                    <label asp-for="Input.FirstName"></label>
-                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                            <div class="col-md-6">
+                                <div class="modern-field">
+                                    <label asp-for="Input.LastName" class="modern-label"></label>
+                                    <input asp-for="Input.LastName" class="form-control modern-input" placeholder="Last name" />
+                                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modern-field">
+                            <label asp-for="Input.DisplayName" class="modern-label">Display name</label>
+                            <input asp-for="Input.DisplayName"
+                                   class="form-control modern-input"
+                                   autocomplete="nickname"
+                                   placeholder="Optional display name" />
+                            <small class="text-muted">If left empty, we will use your first and last name.</small>
+                            <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
+                        </div>
+
+                        <div class="modern-field">
+                            <label asp-for="Input.Email" class="modern-label">Email</label>
+                            <input asp-for="Input.Email"
+                                   class="form-control modern-input"
+                                   autocomplete="username"
+                                   aria-required="true"
+                                   placeholder="name@example.com" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="modern-field">
+                            <label asp-for="Input.Password" class="modern-label">Password</label>
+                            <input asp-for="Input.Password"
+                                   class="form-control modern-input"
+                                   autocomplete="new-password"
+                                   aria-required="true"
+                                   placeholder="Create password" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="modern-field">
+                            <label asp-for="Input.ConfirmPassword" class="modern-label">Confirm password</label>
+                            <input asp-for="Input.ConfirmPassword"
+                                   class="form-control modern-input"
+                                   autocomplete="new-password"
+                                   aria-required="true"
+                                   placeholder="Repeat password" />
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <button id="registerSubmit" type="submit" class="btn modern-primary-btn w-100">
+                            Create account
+                        </button>
+
+                        <div class="modern-auth-footer">
+                            <span class="text-muted">Already have an account?</span>
+                            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Log in</a>
+                        </div>
+                    </form>
                 </div>
+            </div>
 
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.LastName" class="form-control" />
-                    <label asp-for="Input.LastName"></label>
-                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            <div class="col-xl-7 col-lg-6 d-none d-lg-flex">
+                <div class="modern-auth-side">
+                    <div class="modern-auth-side-content">
+                        <span class="modern-side-kicker">Get started</span>
+                        <h2 class="modern-side-title">Build your personal productivity space.</h2>
+                        <p class="modern-side-text">
+                            Start with a clean account setup and unlock tasks, profile management, admin tools and organized workflow.
+                        </p>
+
+                        <div class="modern-feature-grid">
+                            <div class="modern-feature-card">
+                                <div class="modern-feature-icon">👤</div>
+                                <div>
+                                    <strong>Modern profile</strong>
+                                    <p>Display name, profile image and personal details in one clean profile page.</p>
+                                </div>
+                            </div>
+
+                            <div class="modern-feature-card">
+                                <div class="modern-feature-icon">📝</div>
+                                <div>
+                                    <strong>Better productivity</strong>
+                                    <p>Manage tasks, notes and documents from a unified dashboard.</p>
+                                </div>
+                            </div>
+
+                            <div class="modern-feature-card">
+                                <div class="modern-feature-icon">🔐</div>
+                                <div>
+                                    <strong>Secure access</strong>
+                                    <p>Built on ASP.NET Core Identity with role-based access control.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modern-auth-stats">
+                            <div class="modern-stat-card">
+                                <span class="modern-stat-number">Fast</span>
+                                <span class="modern-stat-label">Quick onboarding</span>
+                            </div>
+                            <div class="modern-stat-card">
+                                <span class="modern-stat-number">Clean</span>
+                                <span class="modern-stat-label">Modern UI flow</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.DisplayName" class="form-control" autocomplete="nickname" placeholder="Display name (optional)" />
-                <label asp-for="Input.DisplayName">Display name (optional)</label>
-                <div class="form-text">
-                    If left empty, we will use "First name Last name".
-                </div>
-                <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">
-                Register
-            </button>
-        </form>
+        </div>
     </div>
 </div>
 

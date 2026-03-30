@@ -4,9 +4,9 @@ using LifeAdminServices.Contracts;
 using LifeAdminServices;
 using LifeAdmin.Web.Infrastructure;
 
-
 using Microsoft.EntityFrameworkCore;
 using LifeAdminModels.Models;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +22,12 @@ builder.Services
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(
+    opt =>
+    {
+        opt.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    });
+
 builder.Services.AddHttpContextAccessor();
 
 

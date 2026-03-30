@@ -5,102 +5,74 @@
     ViewData["Title"] = "Log in";
 }
 
-<div class="auth-page">
-    <div class="auth-card">
+<div class="modern-auth-page">
+    <div class="modern-auth-shell">
         <div class="row g-0">
-            <div class="col-lg-6">
-                <div class="auth-form-panel">
-                    <div class="auth-header mb-4">
-                        <span class="auth-badge">Welcome back</span>
-                        <h1 class="auth-title mt-3">Log in to LifeAdmin</h1>
-                        <p class="auth-subtitle">
-                            Access your tasks, notes, categories and workspace tools from one place.
+            <div class="col-xl-5 col-lg-6">
+                <div class="modern-auth-form-panel">
+                    <div class="modern-auth-top">
+                        <span class="modern-auth-badge">Welcome back</span>
+                        <h1 class="modern-auth-title">Log in to LifeAdmin</h1>
+                        <p class="modern-auth-subtitle">
+                            Continue managing your tasks, notes, documents and personal workspace in one place.
                         </p>
                     </div>
 
-                    <form id="account" method="post">
+                    <form id="account" method="post" class="modern-auth-form">
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
 
-                        <div class="mb-3">
-                            <label asp-for="Input.Email" class="form-label auth-label">Email</label>
+                        <div class="modern-field">
+                            <label asp-for="Input.Email" class="modern-label">Email</label>
                             <input asp-for="Input.Email"
-                                   class="form-control auth-input"
+                                   class="form-control modern-input"
                                    autocomplete="username"
                                    aria-required="true"
-                                   placeholder="Enter your email" />
+                                   placeholder="name@example.com" />
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Input.Password" class="form-label auth-label">Password</label>
+                        <div class="modern-field">
+                            <label asp-for="Input.Password" class="modern-label">Password</label>
                             <input asp-for="Input.Password"
-                                   class="form-control auth-input"
+                                   class="form-control modern-input"
                                    autocomplete="current-password"
                                    aria-required="true"
                                    placeholder="Enter your password" />
                             <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
 
-                        <div class="mb-3 form-check">
-                            <input class="form-check-input" asp-for="Input.RememberMe" />
-                            <label asp-for="Input.RememberMe" class="form-check-label">
-                                @Html.DisplayNameFor(m => m.Input.RememberMe)
-                            </label>
+                        <div class="modern-auth-row">
+                            <div class="form-check">
+                                <input class="form-check-input" asp-for="Input.RememberMe" />
+                                <label asp-for="Input.RememberMe" class="form-check-label">
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+
+                            <a id="forgot-password" asp-page="./ForgotPassword" class="modern-inline-link">
+                                Forgot password?
+                            </a>
                         </div>
 
-                        <button id="login-submit" type="submit" class="btn btn-primary w-100 auth-submit">
+                        <button id="login-submit" type="submit" class="btn modern-primary-btn w-100">
                             Log in
                         </button>
 
-                        <div class="auth-links mt-4">
-                            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create an account</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-lg-6 d-none d-lg-flex">
-                <div class="auth-side-panel">
-                    <div>
-                        <span class="auth-side-kicker">Productivity Hub</span>
-                        <h2 class="auth-side-title">Stay organized and focused every day.</h2>
-                        <p class="auth-side-text">
-                            Manage tasks, keep notes, organize categories and access your admin workspace in one elegant dashboard.
-                        </p>
-                    </div>
-
-                    <div class="auth-feature-list">
-                        <div class="auth-feature-item">
-                            <strong>Task management</strong>
-                            <span>Create, track and filter tasks with a clean workflow.</span>
-                        </div>
-
-                        <div class="auth-feature-item">
-                            <strong>Smart organization</strong>
-                            <span>Keep categories, notes and personal productivity tools in one place.</span>
-                        </div>
-
-                        <div class="auth-feature-item">
-                            <strong>Admin tools</strong>
-                            <span>Use the dashboard to monitor users, tasks, notes and categories.</span>
-                        </div>
-                    </div>
-
-                    @if ((Model.ExternalLogins?.Count ?? 0) > 0)
-                    {
-                        <div class="mt-4">
-                            <p class="mb-2 auth-social-label">Or continue with</p>
+                        @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+                        {
+                            <div class="modern-divider">
+                                <span>or continue with</span>
+                            </div>
 
                             <form id="external-account"
                                   asp-page="./ExternalLogin"
                                   asp-route-returnUrl="@Model.ReturnUrl"
                                   method="post"
-                                  class="d-flex flex-wrap gap-2">
+                                  class="modern-social-grid">
                                 @foreach (var provider in Model.ExternalLogins!)
                                 {
                                     <button type="submit"
-                                            class="btn btn-outline-secondary auth-social-btn"
+                                            class="btn modern-social-btn"
                                             name="provider"
                                             value="@provider.Name"
                                             title="Log in using your @provider.DisplayName account">
@@ -108,17 +80,62 @@
                                     </button>
                                 }
                             </form>
+                        }
+
+                        <div class="modern-auth-footer">
+                            <span class="text-muted">Don’t have an account?</span>
+                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create one</a>
                         </div>
-                    }
-                    else
-                    {
-                        <div class="mt-4">
-                            <p class="mb-2 auth-social-label">External login</p>
-                            <div class="auth-feature-item">
-                                <span>No external providers are configured yet.</span>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-xl-7 col-lg-6 d-none d-lg-flex">
+                <div class="modern-auth-side">
+                    <div class="modern-auth-side-content">
+                        <span class="modern-side-kicker">Productivity Hub</span>
+                        <h2 class="modern-side-title">A cleaner way to organize your day.</h2>
+                        <p class="modern-side-text">
+                            LifeAdmin gives you one elegant workspace for tasks, notes, documents, categories and admin tools.
+                        </p>
+
+                        <div class="modern-feature-grid">
+                            <div class="modern-feature-card">
+                                <div class="modern-feature-icon">✓</div>
+                                <div>
+                                    <strong>Task clarity</strong>
+                                    <p>Create, track and filter work with a cleaner workflow.</p>
+                                </div>
+                            </div>
+
+                            <div class="modern-feature-card">
+                                <div class="modern-feature-icon">✦</div>
+                                <div>
+                                    <strong>Smart organization</strong>
+                                    <p>Keep notes, documents and categories in one place.</p>
+                                </div>
+                            </div>
+
+                            <div class="modern-feature-card">
+                                <div class="modern-feature-icon">⚙</div>
+                                <div>
+                                    <strong>Admin ready</strong>
+                                    <p>Role management, user details and scalable architecture.</p>
+                                </div>
                             </div>
                         </div>
-                    }
+
+                        <div class="modern-auth-stats">
+                            <div class="modern-stat-card">
+                                <span class="modern-stat-number">All-in-one</span>
+                                <span class="modern-stat-label">Workspace experience</span>
+                            </div>
+                            <div class="modern-stat-card">
+                                <span class="modern-stat-number">Modern</span>
+                                <span class="modern-stat-label">Clean dashboard UI</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
