@@ -1,12 +1,12 @@
-using LifeAdminData;
-using Microsoft.AspNetCore.Identity;
-using LifeAdminServices.Contracts;
-using LifeAdminServices;
 using LifeAdmin.Web.Infrastructure;
-
-using Microsoft.EntityFrameworkCore;
+using LifeAdminData;
 using LifeAdminModels.Models;
+using LifeAdminServices;
+using LifeAdminServices.Contracts;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,17 +24,18 @@ builder.Services
 builder.Services.AddAuthentication()
     .AddGitHub(options =>
     {
-        options.ClientId = builder.Configuration["Authentication:GitHub:ClientId"]
-            ?? throw new InvalidOperationException("GitHub ClientId is missing.");
-        options.ClientSecret = builder.Configuration["Authentication:GitHub:ClientSecret"]
-            ?? throw new InvalidOperationException("GitHub ClientSecret is missing.");
+        options.ClientId = builder.Configuration["Authentication:GitHub:ClientId"]!;
+        options.ClientSecret = builder.Configuration["Authentication:GitHub:ClientSecret"]!;
+
+        options.Scope.Add("user:email");
+        options.Scope.Add("read:user");
+
+        options.ClaimActions.MapJsonKey("urn:github:avatar", "avatar_url");
     })
     .AddFacebook(options =>
     {
-        options.AppId = builder.Configuration["Authentication:Facebook:AppId"]
-            ?? throw new InvalidOperationException("Facebook AppId is missing.");
-        options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"]
-            ?? throw new InvalidOperationException("Facebook AppSecret is missing.");
+        options.AppId = builder.Configuration["Authentication:Facebook:AppId"]!;
+        options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"]!;
     });
 
 builder.Services.AddControllersWithViews(

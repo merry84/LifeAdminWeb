@@ -35,6 +35,20 @@ namespace LifeAdminData
                 .WithMany(c => c.Tasks)
                 .HasForeignKey(t => t.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<TaskItem>()
+               .HasOne(t => t.Owner)
+               .WithMany(u => u.Tasks)
+               .HasForeignKey(t => t.OwnerId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<TaskItem>()
+                .HasOne(t => t.Category)
+                .WithMany(c => c.Tasks)
+                .HasForeignKey(t => t.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<TaskItem>()
+                .HasQueryFilter(t => !t.IsDeleted);
 
             builder.Entity<Note>()
                 .HasOne(n => n.Owner)
@@ -66,20 +80,7 @@ namespace LifeAdminData
                 .WithMany(t => t.TaskItems)
                 .HasForeignKey(tt => tt.TagId);
 
-            builder.Entity<TaskItem>()
-                .HasOne(t => t.Owner)
-                .WithMany(u => u.Tasks)
-                .HasForeignKey(t => t.OwnerId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<TaskItem>()
-                .HasOne(t => t.Category)
-                .WithMany(c => c.Tasks)
-                .HasForeignKey(t => t.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<TaskItem>()
-                .HasQueryFilter(t => !t.IsDeleted);
+           
         }
     }
 }
