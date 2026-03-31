@@ -10,7 +10,7 @@
         <div class="card-body">
             <h2 class="mb-4">Edit Profile</h2>
 
-            <form asp-action="Edit" method="post">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="mb-3">
@@ -38,9 +38,28 @@
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="ProfileImageUrl" class="form-label"></label>
-                    <input asp-for="ProfileImageUrl" class="form-control" />
-                    <span asp-validation-for="ProfileImageUrl" class="text-danger"></span>
+                    <label class="form-label">Profile Image</label>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.CurrentProfileImageUrl))
+                    {
+                        <div class="mb-2">
+                            <img src="@Model.CurrentProfileImageUrl"
+                                 alt="Current profile image"
+                                 class="rounded-circle border shadow-sm"
+                                 style="width: 90px; height: 90px; object-fit: cover;" />
+                        </div>
+                    }
+
+                    <input asp-for="ProfileImageFile"
+                           type="file"
+                           class="form-control"
+                           accept=".jpg,.jpeg,.png,.webp" />
+
+                    <span asp-validation-for="ProfileImageFile" class="text-danger"></span>
+
+                    <div class="form-text">
+                        Allowed formats: JPG, PNG, WEBP (max 2MB)
+                    </div>
                 </div>
 
                 <div class="mb-3">

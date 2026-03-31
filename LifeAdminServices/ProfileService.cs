@@ -45,7 +45,8 @@ namespace LifeAdminServices
                     LastName = u.LastName,
                     ProfileImageUrl = u.ProfileImageUrl,
                     Bio = u.Bio,
-                    PhoneNumber = u.PhoneNumber
+                    PhoneNumber = u.PhoneNumber,
+                    CurrentProfileImageUrl = u.ProfileImageUrl
                 })
                 .FirstOrDefaultAsync();
         }
@@ -64,6 +65,10 @@ namespace LifeAdminServices
             user.ProfileImageUrl = model.ProfileImageUrl;
             user.Bio = model.Bio;
             user.PhoneNumber = model.PhoneNumber;
+            if (!string.IsNullOrWhiteSpace(model.CurrentProfileImageUrl))
+            {
+                user.ProfileImageUrl = model.CurrentProfileImageUrl;
+            }
 
             await db.SaveChangesAsync();
             return true;

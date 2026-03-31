@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace ViewModels.ProfilesViewModels
 {
@@ -28,5 +29,12 @@ namespace ViewModels.ProfilesViewModels
         [Display(Name = "Phone Number")]
         [Phone]
         public string? PhoneNumber { get; set; }
+        [Display(Name = "Profile Image")]
+        public IFormFile? ProfileImageFile { get; set; }
+
+        public string? CurrentProfileImageUrl
+        {
+            get; set;
+        }
     }
 }
