@@ -59,14 +59,13 @@ namespace LifeAdminServices
             await db.Documents.AddAsync(document);
             await db.SaveChangesAsync();
         }
-
         public async Task DeleteAsync(Document document)
         {
-            document.IsDeleted = false;
-            document.DeletedOn = null;
+            document.IsDeleted = true;
+            document.DeletedOn = DateTime.UtcNow;
             await db.SaveChangesAsync();
         }
-        
+
 
         public async Task<IEnumerable<DocumentListViewModel>> GetDeletedAsync()
              => await db.Documents
