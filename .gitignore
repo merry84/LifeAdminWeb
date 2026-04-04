@@ -26,4 +26,5 @@ appsettings.Development.json
 # Test coverage
 coveragereport/
 TestResults/
-
+**/coveragereport/
+**/TestResults/
