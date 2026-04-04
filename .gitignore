@@ -23,3 +23,7 @@ Thumbs.db
 appsettings.Development.json
 **/appsettings.Development.json
 
+# Test coverage
+coveragereport/
+TestResults/
+
