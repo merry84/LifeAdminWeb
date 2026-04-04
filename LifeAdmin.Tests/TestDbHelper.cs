@@ -1,7 +1,7 @@
 using LifeAdminData;
 using Microsoft.EntityFrameworkCore;
 
-namespace LifeAdmin.Tests.Helpers
+namespace LifeAdmin.Tests
 {
     public static class TestDbHelper
     {

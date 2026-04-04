@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
 using LifeAdminData;
 using LifeAdminModels.Models;
-using LifeAdmin.Tests.Helpers;
-using NUnit.Framework;
 
 namespace LifeAdmin.Tests.Services
 {

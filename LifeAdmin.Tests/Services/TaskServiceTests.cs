@@ -2,8 +2,6 @@
 using LifeAdminData;
 using LifeAdminModels.Models;
 using LifeAdminServices;
-using LifeAdmin.Tests.Helpers;
-using NUnit.Framework;
 
 namespace LifeAdmin.Tests.Services
 {
