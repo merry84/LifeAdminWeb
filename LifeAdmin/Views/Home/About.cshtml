@@ -2,43 +2,41 @@
     ViewData["Title"] = "About LifeAdmin";
 }
 
-<section class="about-page py-4 py-lg-5">
+<section class="dark-page-section py-4 py-lg-5">
     <div class="container">
-        <div class="about-shell">
-            <div class="about-header mb-4">
-                <span class="about-badge">About LifeAdmin</span>
-                <h1 class="about-title mt-3">A clean and practical productivity application</h1>
-                <p class="about-subtitle mb-0">
-                    LifeAdmin is an ASP.NET Core MVC project created as part of my SoftUni training.
-                    It brings together task management, notes, categories, documents, profile features,
-                    and administration in one structured web application.
+        <div class="dark-page-shell">
+            <div class="dark-page-hero mb-4">
+                <span class="dark-page-badge">About LifeAdmin</span>
+                <h1 class="dark-page-title mt-3">A modern productivity project built with ASP.NET Core MVC</h1>
+                <p class="dark-page-subtitle mb-0">
+                    LifeAdmin is a SoftUni project focused on creating a complete and practical web application
+                    for managing tasks, notes, categories, documents, and user profiles in one secure environment.
                 </p>
             </div>
 
             <div class="row g-4">
                 <div class="col-lg-7">
-                    <div class="about-card h-100">
-                        <h2 class="about-section-title">Project overview</h2>
+                    <div class="dark-page-card h-100">
+                        <h2 class="dark-section-title">Project overview</h2>
                         <p>
-                            The goal of LifeAdmin is to provide a simple and well-organized environment for
-                            personal productivity. The project is designed around clean structure, practical
-                            functionality, and a user-friendly interface.
+                            The goal of LifeAdmin is to provide a clean and structured workspace for personal productivity.
+                            The project combines real application architecture with practical features and a modern UI.
                         </p>
                         <p class="mb-0">
-                            It includes both user and administrator features, with attention to validation,
-                            role-based access, maintainable architecture, and responsive design.
+                            It includes both user and administrator functionality, with attention to clean code,
+                            layered structure, validation, testing, role-based access, and responsive design.
                         </p>
                     </div>
                 </div>
 
                 <div class="col-lg-5">
-                    <div class="about-card h-100">
-                        <h2 class="about-section-title">Project highlights</h2>
-                        <ul class="about-list mb-0">
-                            <li>Layered architecture with clear separation of concerns</li>
-                            <li>ASP.NET Core MVC with Entity Framework Core</li>
-                            <li>SQL Server LocalDB and ASP.NET Core Identity</li>
-                            <li>Responsive UI with a modern glass-style feel</li>
+                    <div class="dark-page-card h-100">
+                        <h2 class="dark-section-title">Project highlights</h2>
+                        <ul class="dark-list mb-0">
+                            <li>ASP.NET Core MVC with layered architecture</li>
+                            <li>Entity Framework Core with SQL Server LocalDB</li>
+                            <li>ASP.NET Core Identity authentication and authorization</li>
+                            <li>CRUD operations, search, filtering, pagination, and soft delete</li>
                             <li>Service layer covered by unit tests</li>
                         </ul>
                     </div>
@@ -47,69 +45,67 @@
 
             <div class="row g-4 mt-1">
                 <div class="col-lg-6">
-                    <div class="about-card h-100">
-                        <h2 class="about-section-title">Main features</h2>
+                    <div class="dark-page-card h-100">
+                        <h2 class="dark-section-title">Main features</h2>
 
-                        <div class="about-feature">
+                        <div class="dark-mini-card">
                             <h6>Task Management</h6>
-                            <p>CRUD operations, filtering, pagination, and soft delete functionality.</p>
+                            <p>CRUD operations, filtering, pagination, and soft delete support.</p>
                         </div>
 
-                        <div class="about-feature">
+                        <div class="dark-mini-card">
                             <h6>Notes and Categories</h6>
-                            <p>Organized note management with search and better content structure.</p>
+                            <p>Structured content organization with search and better usability.</p>
                         </div>
 
-                        <div class="about-feature">
+                        <div class="dark-mini-card">
                             <h6>Documents and Profile</h6>
-                            <p>Document upload and recovery, along with editable user profile information.</p>
+                            <p>Upload, delete, restore, and manage personal profile information.</p>
                         </div>
 
-                        <div class="about-feature mb-0">
-                            <h6>Admin Area and Dashboard</h6>
-                            <p>Administrative tools, role-based access, and useful statistics overview.</p>
+                        <div class="dark-mini-card mb-0">
+                            <h6>Dashboard and Admin Area</h6>
+                            <p>Statistics, user management, and role-based administrative tools.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="about-card h-100">
-                        <h2 class="about-section-title">Technologies used</h2>
-
-                        <div class="about-tags mb-4">
+                    <div class="dark-page-card h-100">
+                        <h2 class="dark-section-title">Technologies used</h2>
+                        <div class="dark-tags mb-4">
                             <span>ASP.NET Core MVC</span>
                             <span>C#</span>
-                            <span>Entity Framework Core</span>
+                            <span>EF Core</span>
                             <span>SQL Server</span>
-                            <span>ASP.NET Core Identity</span>
+                            <span>Identity</span>
                             <span>Bootstrap 5</span>
                             <span>NUnit</span>
                             <span>EF Core InMemory</span>
-                            <span>GitHub</span>
                         </div>
 
-                        <h2 class="about-section-title">What I learned</h2>
-                        <ul class="about-list mb-0">
-                            <li>Building a complete MVC application with layered architecture</li>
-                            <li>Structuring services, view models, and data access in a maintainable way</li>
-                            <li>Working with authentication, authorization, and role management</li>
-                            <li>Creating responsive UI with consistent styling across pages</li>
-                            <li>Writing unit tests and improving code quality through coverage</li>
+                        <h2 class="dark-section-title">What I learned</h2>
+                        <ul class="dark-list mb-0">
+                            <li>Building a complete MVC web application with clean structure</li>
+                            <li>Separating business logic into services and view models</li>
+                            <li>Working with authentication, roles, and authorization</li>
+                            <li>Improving quality through testing and code coverage</li>
+                            <li>Creating a more polished and consistent user interface</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="about-card mt-4">
-                <h2 class="about-section-title">About the developer</h2>
+            <div class="dark-page-card mt-4">
+                <h2 class="dark-section-title">About the developer</h2>
                 <p>
-                    My name is Mariya Tsvetkova and I am a Software Engineering student at SoftUni.
+                    My name is Mariya Tsvetkova and I am currently studying Software Engineering at SoftUni.
                     I am focused on improving my skills in C#, ASP.NET Core, databases, clean architecture,
-                    and modern web development.
+                    testing, and modern web application development.
                 </p>
                 <p class="mb-0">
-                    LifeAdmin is an important project in my learning journey because it combines backend logic,
-                    database design, testing, user management, and UI development in one complete application.
+                    LifeAdmin is an important step in my learning journey because it combines backend logic,
+                    data access, authentication, testing, and UI design in one complete project.
                 </p>
             </div>
         </div>

@@ -1,189 +1,175 @@
-﻿@using ViewModels.DashboardViewModels
-@model DashboardStatsViewModel;
-
-@if (!(User.Identity?.IsAuthenticated ?? false))
-{
-    <div class="landing-hero p-4 p-md-5 mb-4 rounded-4">
-        <div class="row align-items-center g-4">
-            <div class="col-12 col-lg-7">
-                <h1 class="display-5 fw-semibold mb-3">
-                    Organize your life.
-                    <br class="d-none d-md-block" />
-                    One simple dashboard.
-                </h1>
-
-                <p class="text-muted mb-4 lead">
-                    Tasks, notes and categories in one clean, secure workspace.
-                </p>
-                <div class="d-flex flex-column flex-sm-row gap-2">
-                    <a class="btn btn-primary dash-pill px-4"
-                       asp-area="Identity" asp-page="/Account/Register">Get Started</a>
-
-                    <a class="btn btn-outline-secondary dash-pill px-4"
-                       asp-area="Identity" asp-page="/Account/Login">I already have an account</a>
-                </div>
-
-            </div>
-
-            <div class="col-12 col-lg-5">
-                <div class="landing-card p-4 rounded-4">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="landing-icon">✅</div>
-                        <div>
-                            <div class="fw-semibold">Task Management</div>
-                            <div class="text-muted small">Create, edit, track status.</div>
-                        </div>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="landing-icon">📝</div>
-                        <div>
-                            <div class="fw-semibold">Quick Notes</div>
-                            <div class="text-muted small">Save ideas and reminders.</div>
-                        </div>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="landing-icon">🏷️</div>
-                        <div>
-                            <div class="fw-semibold">Categories</div>
-                            <div class="text-muted small">Organize everything cleanly.</div>
-                        </div>
-                    </div>
-
-                    <hr class="my-4" />
-
-                    <div class="text-muted small">
-                        Your content is protected with authentication and owner-based access.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-4">
-        <div class="col-12 col-md-4">
-            <div class="card p-4 h-100">
-                <div class="d-flex align-items-center gap-3 mb-2">
-                    <div class="landing-icon-sm">⚡</div>
-                    <h5 class="mb-0">Fast workflow</h5>
-                </div>
-                <div class="text-muted">Create tasks and notes in seconds with a clean UI.</div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-            <div class="card p-4 h-100">
-                <div class="d-flex align-items-center gap-3 mb-2">
-                    <div class="landing-icon-sm">🔒</div>
-                    <h5 class="mb-0">Secure by default</h5>
-                </div>
-                <div class="text-muted">Identity login + authorization so only you access your data.</div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-            <div class="card p-4 h-100">
-                <div class="d-flex align-items-center gap-3 mb-2">
-                    <div class="landing-icon-sm">✨</div>
-                    <h5 class="mb-0">Modern look</h5>
-                </div>
-                <div class="text-muted">Glass UI, soft background and consistent components.</div>
-            </div>
-        </div>
-    </div>
+﻿@{
+    ViewData["Title"] = "Home";
 }
-else
-{
-    <div class="dash-hero p-4 p-md-5 mb-4 rounded-4">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-            <div>
-               
-                <h1 class="display-6 fw-semibold mb-1">Dashboard</h1>
-                <p class="text-muted mb-0">Quick overview of your work today.</p>
+
+<section class="home-dark py-4 py-lg-5">
+    <div class="container">
+        <div class="dark-hero">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
+                    <div class="dark-hero-content">
+                        <span class="dark-badge">LifeAdmin • Productivity Hub</span>
+
+                        <h1 class="dark-title mt-3">
+                            Manage your work
+                            <br />
+                            in one modern space.
+                        </h1>
+
+                        <p class="dark-subtitle">
+                            LifeAdmin is a personal productivity web application built with ASP.NET Core MVC.
+                            It helps users organize tasks, notes, categories, and documents in a secure and structured way.
+                        </p>
+
+                        <div class="dark-actions mt-4">
+                            <a asp-area="Identity"
+                               asp-page="/Account/Register"
+                               class="btn btn-dark-primary">
+                                Get Started
+                            </a>
+
+                            <a asp-controller="Home"
+                               asp-action="About"
+                               class="btn btn-dark-secondary">
+                                Learn More
+                            </a>
+                        </div>
+
+                        <div class="dark-tags mt-4">
+                            <span>Tasks</span>
+                            <span>Notes</span>
+                            <span>Documents</span>
+                            <span>Dashboard</span>
+                            <span>Admin Area</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="preview-panel">
+                        <div class="preview-header">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div class="preview-body">
+                            <div class="preview-main">
+                                <div class="preview-main-top">
+                                    <div>
+                                        <h5>Today’s Dashboard</h5>
+                                        <p class="mb-0">Your productivity overview</p>
+                                    </div>
+                                    <span class="preview-status">Active</span>
+                                </div>
+
+                                <div class="preview-stats">
+                                    <div class="preview-stat">
+                                        <strong>12</strong>
+                                        <span>Tasks</span>
+                                    </div>
+                                    <div class="preview-stat">
+                                        <strong>8</strong>
+                                        <span>Notes</span>
+                                    </div>
+                                    <div class="preview-stat">
+                                        <strong>5</strong>
+                                        <span>Docs</span>
+                                    </div>
+                                </div>
+
+                                <div class="task-preview-list">
+                                    <div class="task-preview-item">
+                                        <span class="status-dot done"></span>
+                                        <p>Finish About page styling</p>
+                                    </div>
+                                    <div class="task-preview-item">
+                                        <span class="status-dot progress"></span>
+                                        <p>Review document restore feature</p>
+                                    </div>
+                                    <div class="task-preview-item">
+                                        <span class="status-dot planned"></span>
+                                        <p>Polish mobile navigation</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="preview-side">
+                                <h6>Quick access</h6>
+                                <div class="quick-link-box">My Tasks</div>
+                                <div class="quick-link-box">Notes</div>
+                                <div class="quick-link-box">Documents</div>
+                                <div class="quick-link-box">Profile</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-1">
+            <div class="col-md-6 col-xl-4">
+                <div class="dark-feature-card accent-card h-100">
+                    <div class="feature-icon-dark">✓</div>
+                    <h3>Organized workflow</h3>
+                    <p>
+                        Keep tasks, notes, and important information together in one structured workspace.
+                    </p>
+                </div>
             </div>
 
-            <div class="d-flex gap-2">
-                <a class="btn btn-primary btn-sm px-3 dash-pill"
-                   asp-controller="Tasks" asp-action="Create">+ New Task</a>
+            <div class="col-md-6 col-xl-4">
+                <div class="dark-feature-card h-100">
+                    <div class="feature-icon-dark">🔒</div>
+                    <h3>Secure access</h3>
+                    <p>
+                        Authentication, authorization, and owner-based protection help keep content private.
+                    </p>
+                </div>
+            </div>
 
-                <a class="btn btn-outline-secondary btn-sm px-3 dash-pill"
-                   asp-controller="Notes" asp-action="Create">+ New Note</a>
+            <div class="col-md-6 col-xl-4">
+                <div class="dark-feature-card h-100">
+                    <div class="feature-icon-dark">⚙</div>
+                    <h3>Built with purpose</h3>
+                    <p>
+                        Clean architecture, service layer, testing, and responsive design in one project.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-1">
+            <div class="col-lg-7">
+                <div class="dark-info-card h-100">
+                    <span class="section-label-dark">About the project</span>
+                    <h2 class="section-title-dark">A practical ASP.NET Core MVC application</h2>
+                    <p>
+                        LifeAdmin is developed as part of my SoftUni training and is focused on building
+                        a complete web application with real project structure, role-based functionality,
+                        database logic, testing, and polished UI.
+                    </p>
+                    <p class="mb-0">
+                        It combines personal productivity features with clean organization and maintainable design.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="dark-info-card h-100">
+                    <span class="section-label-dark">Technology stack</span>
+                    <div class="stack-tags-dark">
+                        <span>ASP.NET Core MVC</span>
+                        <span>C#</span>
+                        <span>EF Core</span>
+                        <span>SQL Server</span>
+                        <span>Identity</span>
+                        <span>Bootstrap 5</span>
+                        <span>NUnit</span>
+                        <span>Layered Architecture</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="row g-4">
-        <!-- Tasks -->
-        <div class="col-12 col-md-4">
-            <div class="card dash-card h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <div class="text-muted small">My Tasks</div>
-                            <div class="dash-number">@Model.MyTasksCount</div>
-                        </div>
-                        <div class="dash-icon">✅</div>
-                    </div>
-
-                    <div class="mt-3 text-muted">Open and manage your tasks.</div>
-
-                    <div class="mt-3">
-                        <a class="btn btn-outline-secondary btn-sm w-100 dash-pill"
-                           asp-controller="Tasks" asp-action="All">
-                            Open Tasks
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Notes -->
-        <div class="col-12 col-md-4">
-            <div class="card dash-card h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <div class="text-muted small">Notes</div>
-                            <div class="dash-number">@Model.MyNotesCount</div>
-                        </div>
-                        <div class="dash-icon">📝</div>
-                    </div>
-
-                    <div class="mt-3 text-muted">Keep quick ideas and reminders.</div>
-
-                    <div class="mt-3">
-                        <a class="btn btn-outline-secondary btn-sm w-100 dash-pill"
-                           asp-controller="Notes" asp-action="All">
-                            Open Notes
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Categories -->
-        <div class="col-12 col-md-4">
-            <div class="card dash-card h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <div class="text-muted small">Categories</div>
-                            <div class="dash-number">@Model.CategoriesCount</div>
-                        </div>
-                        <div class="dash-icon">🏷️</div>
-                    </div>
-
-                    <div class="mt-3 text-muted">Manage categories for better organization.</div>
-
-                    <div class="mt-3">
-                        <a class="btn btn-outline-secondary btn-sm w-100 dash-pill"
-                           asp-controller="Categories" asp-action="All">
-                            Open Categories
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
+</section>

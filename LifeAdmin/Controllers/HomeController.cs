@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using ViewModels;
 
-
 namespace LifeAdmin.Web.Controllers
 {
     public class HomeController : Controller
@@ -28,19 +27,26 @@ namespace LifeAdmin.Web.Controllers
         {
             if (!(User.Identity?.IsAuthenticated ?? false))
             {
-                return View(); 
+                return View("Index");
             }
 
-            var userId = userManager.GetUserId(User)!;
+            var userId = userManager.GetUserId(User);
+
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return View("Index");
+            }
+
             var model = await dashboardService.GetStatsAsync(userId);
 
-            return View(model);
+            return View("Dashboard", model);
         }
 
         public IActionResult Privacy()
         {
             return View();
         }
+
         public IActionResult About()
         {
             return View();
@@ -49,7 +55,10 @@ namespace LifeAdmin.Web.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
     }
 }

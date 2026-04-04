@@ -2,38 +2,31 @@
 @model DashboardStatsViewModel
 
 @{
-    ViewData["Title"] = "Admin Dashboard";
+    ViewData["Title"] = "Dashboard";
 }
 
 <div class="container py-4 admin-dark">
-    <h1 class="admin-title mb-2">Admin Dashboard</h1>
+    <h1 class="admin-title mb-2">Dashboard</h1>
     <p class="admin-subtitle mb-4">
-        Overview of users, tasks, notes and categories.
+        Overview of your tasks, notes and categories.
     </p>
 
     <div class="row g-4 mb-4">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="admin-stat-card">
-                <span>Users</span>
-                <strong>@Model.TotalUsers</strong>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="admin-stat-card">
-                <span>Tasks</span>
+                <span>My Tasks</span>
                 <strong>@Model.TotalTasks</strong>
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="admin-stat-card">
-                <span>Notes</span>
+                <span>My Notes</span>
                 <strong>@Model.TotalNotes</strong>
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="admin-stat-card">
                 <span>Categories</span>
                 <strong>@Model.CategoriesCount</strong>
@@ -44,9 +37,8 @@
     <div class="row g-4">
         <div class="col-lg-6">
             <div class="admin-card">
-                <h4>System Snapshot</h4>
+                <h4>Quick Overview</h4>
                 <ul class="admin-list mb-0">
-                    <li>Users: @Model.TotalUsers</li>
                     <li>Tasks: @Model.TotalTasks</li>
                     <li>Notes: @Model.TotalNotes</li>
                     <li>Categories: @Model.CategoriesCount</li>
@@ -56,27 +48,27 @@
 
         <div class="col-lg-6">
             <div class="admin-card">
-                <h4>Admin Shortcuts</h4>
+                <h4>Quick Actions</h4>
 
                 <a asp-area=""
                    asp-controller="Tasks"
-                   asp-action="AllUsers"
-                   class="admin-btn">
-                    Manage All Tasks
-                </a>
-
-                <a asp-area=""
-                   asp-controller="Categories"
                    asp-action="All"
                    class="admin-btn">
-                    Manage Categories
+                    Go to My Tasks
                 </a>
 
                 <a asp-area=""
-                   asp-controller="Home"
-                   asp-action="Index"
+                   asp-controller="Notes"
+                   asp-action="All"
+                   class="admin-btn">
+                    Open Notes
+                </a>
+
+                <a asp-area=""
+                   asp-controller="Documents"
+                   asp-action="All"
                    class="admin-btn-outline">
-                    Back to Main Dashboard
+                    View Documents
                 </a>
             </div>
         </div>
