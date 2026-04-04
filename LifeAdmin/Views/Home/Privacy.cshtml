@@ -1,35 +1,65 @@
 ﻿@{
-    ViewData["Title"] = "Privacy";
+    ViewData["Title"] = "Privacy Policy";
 }
 
-<div class="card p-4 p-md-5">
-    <h1 class="mb-2">Privacy</h1>
-    <p class="text-muted mb-4">
-        LifeAdmin respects your privacy. This page explains what data is stored and how it is used.
-    </p>
+<div class="container py-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-body p-5">
 
-    <h5 class="mt-3">What data we store</h5>
-    <ul class="text-muted">
-        <li>Account details (email, first/last name, display name)</li>
-        <li>Your tasks and notes (content you create)</li>
-        <li>Categories used to organize tasks</li>
-    </ul>
+            <h1 class="mb-4 fw-bold">Privacy Policy</h1>
 
-    <h5 class="mt-4">How we use the data</h5>
-    <ul class="text-muted">
-        <li>To authenticate users and protect personal content</li>
-        <li>To show your tasks/notes only to you (and admins where applicable)</li>
-        <li>To improve usability and application features</li>
-    </ul>
+            <p class="text-muted">
+                Last updated: @DateTime.UtcNow.ToString("MMMM yyyy")
+            </p>
 
-    <h5 class="mt-4">Security</h5>
-    <p class="text-muted">
-        Access to your content is protected by authentication and authorization. Passwords are stored securely
-        using ASP.NET Identity hashing mechanisms.
-    </p>
+            <hr class="my-4" />
 
-    <h5 class="mt-4">Contact</h5>
-    <p class="text-muted mb-0">
-        If you have questions about privacy, you can contact the project owner.
-    </p>
+            <p>
+                <strong>LifeAdmin</strong> is a web application for managing tasks, notes, and personal organization.
+                The project is developed as part of the SoftUni training program and demonstrates
+                practical skills in building secure and structured web applications.
+            </p>
+
+            <h5 class="mt-4">🔐 Data We Store</h5>
+            <p>
+                The application stores basic user account information such as username and email, along with user-generated content including tasks, notes, and categories.
+                All data is stored securely in a local database and is used strictly for application functionality.
+            </p>
+
+            <h5 class="mt-4">🛡️ Data Protection</h5>
+            <p>
+                LifeAdmin uses ASP.NET Core Identity to ensure secure authentication and authorization.
+                Access to data is restricted so that users can only view and manage their own content.
+            </p>
+
+            <h5 class="mt-4">🚫 Data Sharing</h5>
+            <p>
+                This application does not share, sell, or distribute user data to third parties.
+                No external tracking or analytics services are integrated.
+            </p>
+
+            <h5 class="mt-4">⚙️ Intended Use</h5>
+            <p>
+                This project is developed for educational and demonstration purposes.
+                It is not intended for production use or handling sensitive real-world data.
+            </p>
+
+            <h5 class="mt-4">📬 Contact</h5>
+            <p>
+                For questions regarding this project, please contact the developer via:
+            </p>
+
+            <ul>
+                <li>GitHub: <strong>merry84</strong></li>
+                <li>LinkedIn: <strong>Maria Tsvetkova</strong></li>
+            </ul>
+
+            <hr class="my-4" />
+
+            <p class="text-muted small">
+                © 2026 LifeAdmin. All rights reserved.
+            </p>
+
+        </div>
+    </div>
 </div>

@@ -10,8 +10,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - LifeAdmin</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/LifeAdmin.styles.css" asp-append-version="true" />
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -103,6 +105,7 @@
                                     {
                                         <li><hr class="dropdown-divider" /></li>
                                         <li class="dropdown-header text-uppercase small text-muted px-3">Admin Tools</li>
+
                                         <li>
                                             <a class="dropdown-item py-2"
                                                asp-area="Admin"
@@ -168,6 +171,15 @@
                             <a class="nav-link nav-pill"
                                asp-area=""
                                asp-controller="Home"
+                               asp-action="About">
+                                About
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link nav-pill"
+                               asp-area=""
+                               asp-controller="Home"
                                asp-action="Privacy">
                                 Privacy
                             </a>
@@ -188,10 +200,15 @@
         @RenderBody()
     </main>
 
-    <footer class="border-top footer text-muted py-2">
-        <div class="container">
-            &copy; 2026 - LifeAdmin -
-            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer text-muted py-2 mt-auto">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                &copy; 2026 - LifeAdmin
+            </div>
+            <div class="d-flex gap-3">
+                <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+                <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
         </div>
     </footer>
 
@@ -200,9 +217,14 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var toasts = document.querySelectorAll('.js-toast');
+
             toasts.forEach(function (el) {
-                var t = new bootstrap.Toast(el, { autohide: true, delay: 3500 });
-                t.show();
+                var toast = new bootstrap.Toast(el, {
+                    autohide: true,
+                    delay: 3500
+                });
+
+                toast.show();
             });
         });
     </script>
