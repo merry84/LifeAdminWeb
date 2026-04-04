@@ -1,42 +1,42 @@
-﻿# LifeAdmin
-
-**LifeAdmin** is a modern ASP.NET Core MVC web application for managing  
-tasks, notes, and categories in a clean, secure, and user-friendly dashboard.
+﻿**LifeAdmin** is a modern ASP.NET Core MVC web application designed for managing  
+tasks, notes, and categories through a clean, secure, and user-friendly dashboard.
 
 ---
 
 ## ✨ Features
 
-- 🔐 User authentication with **ASP.NET Core Identity**
-- ✅ Personal **Task Management** (CRUD)
+- 🔐 Authentication & authorization with **ASP.NET Core Identity**
+- ✅ Personal **Task Management** (Create, Read, Update, Delete)
 - 📝 **Notes module** for quick ideas and reminders
 - 🏷️ **Categories** for better organization
-- 📊 Clean **dashboard overview**
+- 📄 **Documents module** (upload & manage files)
+- 📊 Interactive **dashboard overview**
 - 🎨 Modern **glass-style responsive UI**
-- 🔒 Owner-based **authorization & data protection**
+- 🔒 Owner-based **data protection**
+- 🧪 **Unit tests for service layer with high coverage**
 
 ---
 
 ## 🧱 Architecture
 
-The project follows a clean layered structure:
+The project follows a clean layered architecture:
 
 - **Web (MVC)** – Controllers, Views, UI  
 - **Services** – Business logic & data operations  
 - **Data** – DbContext, Entities, Migrations  
 - **ViewModels** – Input & presentation models  
-- **Common (GCommon)** – DataConstants & shared logic  
+- **Common (GCommon)** – Constants & shared logic  
 
 ---
 
 ## 🛠️ Technologies
 
-- **ASP.NET Core MVC**
-- **Entity Framework Core**
-- **- SQL Server (LocalDB)**
-- **ASP.NET Core Identity**
-- **Bootstrap 5**
-- **C# / .NET**
+- ASP.NET Core MVC (.NET 8)
+- Entity Framework Core
+- SQL Server (LocalDB)
+- ASP.NET Core Identity
+- Bootstrap 5
+- C#
 
 ---
 
@@ -85,16 +85,28 @@ appsettings.json
 
 ## User Roles
 
-### User
+🧑 User
+Manages personal tasks, notes, and categories
+Access limited to owned data
 
-* Manages personal tasks, notes, and categories
-* Access limited to owned data
+👨‍💼 Administrator
+Can view all users' tasks
+Can manage categories globally
 
-### Admin
 
-* Can view all tasks
-* Can manage categories globally
+🧪 Testing & Coverage
 
+The project includes unit tests for the Service layer, covering:
+
+TaskService
+NotesService
+DocumentService
+CategoryService
+TagService
+ProfileService
+DashboardService
+
+📊 Coverage is generated using ReportGenerator.
 
 ## 📸 Screenshots
 
@@ -134,9 +146,11 @@ Database design using EF Core
 
 Clean code practices and layered structure
 
+Unit testing and code coverage
+
 Modern responsive UI development
 
-## 👩‍💻 Author
+👩‍💻 Author
 
 Maria Tsvetkova
 SoftUni Student – ASP.NET & Software Engineering
