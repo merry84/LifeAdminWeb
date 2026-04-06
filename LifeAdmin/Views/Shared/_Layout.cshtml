@@ -18,12 +18,13 @@
 <body class="d-flex flex-column min-vh-100">
     <header>
         <nav class="navbar navbar-expand-lg dark-navbar py-3">
-            <div class="container-fluid px-4">
-                <a class="navbar-brand d-flex align-items-center gap-2 fw-bold"
+            <div class="container px-3 px-lg-4">
+                <a class="navbar-brand d-flex align-items-center gap-3 fw-bold"
                    asp-area=""
                    asp-controller="Home"
                    asp-action="Index">
                     <span class="brand-logo dark-brand-logo">L</span>
+
                     <span class="d-flex flex-column lh-sm">
                         <span class="brand-title dark-brand-title">LifeAdmin</span>
                         <small class="brand-subtitle dark-brand-subtitle">Productivity Hub</small>
@@ -81,8 +82,11 @@
                                     Workspace
                                 </a>
 
-                                <ul class="dropdown-menu dropdown-menu-dark-modern border-0 shadow" aria-labelledby="workspaceMenu">
-                                    <li class="dropdown-header text-uppercase small text-light-emphasis px-3">Workspace</li>
+                                <ul class="dropdown-menu dropdown-menu-dark-modern border-0 shadow"
+                                    aria-labelledby="workspaceMenu">
+                                    <li class="dropdown-header text-uppercase small text-secondary px-3">
+                                        Workspace
+                                    </li>
                                     <li>
                                         <a class="dropdown-item py-2"
                                            asp-area=""
@@ -103,7 +107,10 @@
                                     @if (User.IsInRole("Administrator"))
                                     {
                                         <li><hr class="dropdown-divider" /></li>
-                                        <li class="dropdown-header text-uppercase small text-light-emphasis px-3">Admin Tools</li>
+
+                                        <li class="dropdown-header text-uppercase small text-secondary px-3">
+                                            Admin Tools
+                                        </li>
 
                                         <li>
                                             <a class="dropdown-item py-2"
@@ -214,6 +221,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var toasts = document.querySelectorAll('.js-toast');
