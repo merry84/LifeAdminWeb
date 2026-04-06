@@ -1,0 +1,39 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div class="manage-page-shell mt-4">
+    <div class="manage-page-header mb-4">
+        <h1 class="manage-page-title">Manage your account</h1>
+        <p class="manage-page-subtitle mb-0">
+            Update your profile, email, password, and connected login providers.
+        </p>
+    </div>
+
+    <hr />
+
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="manage-nav-card">
+                <partial name="_ManageNav" />
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="manage-content-card">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

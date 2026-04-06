@@ -1394,3 +1394,284 @@ header,
 .modern-auth-footer {
     margin-top: 1.5rem;
 }
+/* Documents / tables over image fix */
+.page-overlay {
+    background: rgba(0, 0, 0, 0.35);
+}
+
+/* Text over image */
+.table,
+.table th,
+.table td {
+    color: #172033 !important;
+}
+
+    /* Table header stronger */
+    .table thead th {
+        color: rgba(114, 102, 240, 0.08) !important;
+        font-weight: 700;
+    }
+
+    /* Buttons inside table */
+    .table .btn {
+        color: #fff !important;
+    }
+   
+
+/* Text over image */
+.table,
+.table th,
+.table td {
+    color: #172033 !important;
+}
+
+/* Table header stronger */
+.table thead th {
+    color: #172033 !important;
+    font-weight: 700;
+}
+
+/* Buttons inside table */
+.table .btn {
+    color: #172033 !important;
+}
+/* =========================
+   Identity Manage pages
+========================= */
+
+.manage-page-shell {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.manage-nav-card {
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 18px;
+    padding: 1rem;
+}
+
+.manage-content-card {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+}
+
+.manage-page-shell h1,
+.manage-page-shell h2,
+.manage-page-shell h3,
+.manage-page-shell label,
+.manage-page-shell p,
+.manage-page-shell .text-dark {
+    color: var(--la-text) !important;
+}
+
+.manage-page-shell hr {
+    border-color: rgba(15, 23, 42, 0.10);
+    opacity: 1;
+}
+
+/* nav links in manage area */
+.manage-nav-card .nav-link,
+.manage-nav-card a {
+    color: var(--la-primary) !important;
+    border-radius: 12px;
+}
+
+.manage-nav-card .nav-pills .nav-link.active,
+.manage-nav-card .nav-pills .show > .nav-link {
+    background: linear-gradient(135deg, var(--la-primary), var(--la-primary-2));
+    color: #fff !important;
+}
+/* Manage navigation */
+.manage-nav-pills .nav-link {
+    color: var(--la-primary) !important;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+    .manage-nav-pills .nav-link:hover {
+        background: rgba(114, 102, 240, 0.08);
+        color: var(--la-primary) !important;
+    }
+
+    .manage-nav-pills .nav-link.active,
+    .manage-nav-pills .show > .nav-link {
+        background: linear-gradient(135deg, var(--la-primary), var(--la-primary-2));
+        color: #fff !important;
+        box-shadow: 0 10px 20px rgba(114, 102, 240, 0.18);
+    }
+/* =========================
+   Manage forms
+========================= */
+
+.manage-form-shell {
+    max-width: 640px;
+}
+
+.manage-form-header {
+    margin-bottom: 1.5rem;
+}
+
+.manage-form-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--la-text);
+    margin-bottom: 0.5rem;
+}
+
+.manage-form-subtitle {
+    color: var(--la-text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.manage-form .form-label {
+    font-weight: 700;
+    color: var(--la-text);
+    margin-bottom: 0.5rem;
+}
+
+.manage-form .form-control {
+    min-height: 58px;
+    border-radius: 16px;
+}
+
+.manage-submit-btn {
+    min-height: 58px;
+    border-radius: 18px;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 14px 28px rgba(114, 102, 240, 0.20);
+}
+/* =========================
+   Identity Manage pages
+========================= */
+
+.manage-page-shell {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.manage-page-header {
+    margin-bottom: 1.5rem;
+}
+
+.manage-page-title {
+    font-size: 2.8rem;
+    line-height: 1.05;
+    font-weight: 800;
+    color: var(--la-text);
+    margin-bottom: 0.6rem;
+}
+
+.manage-page-subtitle {
+    color: var(--la-text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 720px;
+}
+
+.manage-page-shell hr {
+    border-color: rgba(15, 23, 42, 0.10);
+    opacity: 1;
+    margin: 0 0 1.5rem 0;
+}
+
+.manage-nav-card {
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 18px;
+    padding: 1rem;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+}
+
+.manage-content-card {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 20px;
+    padding: 1.75rem;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+}
+
+.manage-page-shell h1,
+.manage-page-shell h2,
+.manage-page-shell h3,
+.manage-page-shell h4,
+.manage-page-shell label,
+.manage-page-shell p,
+.manage-page-shell .text-dark {
+    color: var(--la-text) !important;
+}
+
+/* Manage navigation */
+.manage-nav-pills .nav-link {
+    color: var(--la-primary) !important;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+    .manage-nav-pills .nav-link:hover {
+        background: rgba(114, 102, 240, 0.08);
+        color: var(--la-primary) !important;
+    }
+
+    .manage-nav-pills .nav-link.active,
+    .manage-nav-pills .show > .nav-link {
+        background: linear-gradient(135deg, var(--la-primary), var(--la-primary-2));
+        color: #fff !important;
+        box-shadow: 0 10px 20px rgba(114, 102, 240, 0.18);
+    }
+
+/* Manage forms */
+.manage-form-shell {
+    max-width: 640px;
+}
+
+.manage-form-title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--la-text);
+    margin-bottom: 0.5rem;
+}
+
+.manage-form-subtitle {
+    color: var(--la-text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.manage-form .form-label {
+    font-weight: 700;
+    color: var(--la-text);
+    margin-bottom: 0.5rem;
+}
+
+.manage-form .form-control {
+    min-height: 58px;
+    border-radius: 16px;
+}
+
+.manage-submit-btn {
+    min-height: 58px;
+    border-radius: 18px;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 14px 28px rgba(114, 102, 240, 0.20);
+}
