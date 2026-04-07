@@ -49,8 +49,6 @@ The project follows a clean layered architecture:
 
 ---
 
-## Getting Started
-
 ### 1. Clone the repository
 
 ```bash
@@ -83,28 +81,27 @@ appsettings.json
 
 ---
 
-## User Roles
+## 👥 User Roles
 
-🧑 User
-Manages personal tasks, notes, and categories
-Access limited to owned data
+### 🧑 User
+- Manages personal tasks, notes, and documents  
+- Access limited to owned data  
 
-👨‍💼 Administrator
-Can view all users' tasks
-Can manage categories globally
+### 👨‍💼 Administrator
+- Can view all users' tasks  
+- Can manage categories globally  
 
-
-🧪 Testing & Coverage
+## 🧪 Testing & Coverage
 
 The project includes unit tests for the Service layer, covering:
 
-TaskService
-NotesService
-DocumentService
-CategoryService
-TagService
-ProfileService
-DashboardService
+- TaskService
+- NotesService
+- DocumentService
+- CategoryService
+- TagService
+- ProfileService
+- DashboardService
 
 📊 Coverage is generated using ReportGenerator.
 
@@ -112,11 +109,15 @@ DashboardService
 
 ### Dashboard
 ![Dashboard](docs/screenshots/dashboard.png)
-![Dashboard](docs/screenshots/dashboard1.png)
+
+### Profile
+![Profile](docs/screenshots/profile_page.png)
+
+### Admin Dashboard
+![Admin Dashboard](docs/screenshots/admin_panel.png)
 
 ### Tasks
-![Tasks](docs/screenshots/myTasks.png)
-
+![Tasks](docs/screenshots/my_tasks.png)
 
 ### Notes
 ![Notes](docs/screenshots/notes.png)
@@ -124,12 +125,15 @@ DashboardService
 ### Categories
 ![Categories](docs/screenshots/categories.png)
 
+### Documents
+![Documents](docs/screenshots/all_documents.png)
+
 ### Login
 ![Login](docs/screenshots/login.png)
+![Login](docs/screenshots/login1.png)
 
 ### Register pages
-![Login](docs/screenshots/register.png)
-![Login](docs/screenshots/register1.png)
+![Register](docs/screenshots/register.png)
 
 
 
