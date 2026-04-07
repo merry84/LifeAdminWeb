@@ -81,6 +81,21 @@ appsettings.json
 
 ---
 
+## 🐳 Docker Support
+
+The application can be started using Docker and SQL Server container:
+
+```bash
+docker compose up --build
+```
+
+Then open:
+
+http://localhost:8080
+
+Note:
+External authentication (GitHub, Google, Facebook) is only enabled when valid credentials are provided.
+
 ## 👥 User Roles
 
 ### 🧑 User
