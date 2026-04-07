@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+**/.vs/
+**/TestResults/
+**/node_modules/
+**/coverage/
+**/coveragereport/
+.git
+.gitignore
+README.md

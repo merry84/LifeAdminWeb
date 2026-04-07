@@ -21,27 +21,51 @@ builder.Services
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddAuthentication()
-    .AddGitHub(options =>
+var authenticationBuilder = builder.Services.AddAuthentication();
+
+var githubClientId = builder.Configuration["Authentication:GitHub:ClientId"];
+var githubClientSecret = builder.Configuration["Authentication:GitHub:ClientSecret"];
+
+if (!string.IsNullOrWhiteSpace(githubClientId) &&
+    !string.IsNullOrWhiteSpace(githubClientSecret))
+{
+    authenticationBuilder.AddGitHub(options =>
     {
-        options.ClientId = builder.Configuration["Authentication:GitHub:ClientId"]!;
-        options.ClientSecret = builder.Configuration["Authentication:GitHub:ClientSecret"]!;
+        options.ClientId = githubClientId;
+        options.ClientSecret = githubClientSecret;
 
         options.Scope.Add("user:email");
         options.Scope.Add("read:user");
 
         options.ClaimActions.MapJsonKey("urn:github:avatar", "avatar_url");
-    })
-    .AddFacebook(options =>
-    {
-        options.AppId = builder.Configuration["Authentication:Facebook:AppId"]!;
-        options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"]!;
-    })
-    .AddGoogle(options =>
-    {
-        options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
-        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
     });
+}
+
+var facebookAppId = builder.Configuration["Authentication:Facebook:AppId"];
+var facebookAppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+
+if (!string.IsNullOrWhiteSpace(facebookAppId) &&
+    !string.IsNullOrWhiteSpace(facebookAppSecret))
+{
+    authenticationBuilder.AddFacebook(options =>
+    {
+        options.AppId = facebookAppId;
+        options.AppSecret = facebookAppSecret;
+    });
+}
+
+var googleClientId = builder.Configuration["Authentication:Google:ClientId"];
+var googleClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+
+if (!string.IsNullOrWhiteSpace(googleClientId) &&
+    !string.IsNullOrWhiteSpace(googleClientSecret))
+{
+    authenticationBuilder.AddGoogle(options =>
+    {
+        options.ClientId = googleClientId;
+        options.ClientSecret = googleClientSecret;
+    });
+}
 
 builder.Services.AddControllersWithViews(
     opt =>
@@ -50,8 +74,6 @@ builder.Services.AddControllersWithViews(
     });
 
 builder.Services.AddHttpContextAccessor();
-
-
 
 builder.Services.AddRazorPages();
 
@@ -65,12 +87,11 @@ builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage(); 
+    app.UseDeveloperExceptionPage();
 }
 else
 {
